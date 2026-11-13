@@ -212,3 +212,15 @@ body.reader-light .toolbar-group>span,body.reader-light .reading-time{color:#626
 @media(max-width:900px){.hero-content{grid-template-columns:1fr .9fr;gap:28px}.hero-feature{grid-template-columns:1fr;padding:16px}.feature-cover{min-height:180px}.books{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.hero{min-height:0}.hero-content{grid-template-columns:1fr;padding-top:48px;padding-bottom:45px}.hero-feature{grid-template-columns:.85fr 1.15fr;margin-top:10px}.feature-cover{min-height:185px}.hero-trust{gap:11px}.stats-grid strong{font-size:23px}.stats-grid span{font-size:10px}.latest-grid{grid-template-columns:1fr}.latest-card{gap:10px;padding:13px}.latest-card>a{font-size:11px}}
 @media(max-width:460px){.books{grid-template-columns:1fr}.book-cover{height:240px}.search-row select{max-width:none;width:100%}.category-grid{grid-template-columns:1fr 1fr}.category-grid button{padding:13px 10px}.category-grid button small{display:none}.hero-actions{gap:12px}.hero-trust{font-size:10px}.hero-feature{padding:12px;gap:10px}.feature-cover{min-height:155px}.feature-symbol{font-size:50px}.feature-info h2{font-size:17px}.feature-info p{font-size:11px}}
+
+
+/* Featured novel artwork */
+.feature-art{min-height:245px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;overflow:hidden;border:1px solid #d4aa6655;color:#f8edda;isolation:isolate}
+.feature-art:before,.feature-art:after{content:"";position:absolute;z-index:-1;width:180px;height:180px;border:1px solid #e6c77a66;border-radius:50%}
+.feature-art:after{width:225px;height:225px;border-radius:42%;transform:rotate(35deg)}
+.feature-art .feature-ring{position:absolute;width:145px;height:145px;border:1px dashed #e8c77f88;border-radius:50%;transform:rotate(-25deg)}
+.feature-glyph{font-size:68px;color:#f0cc85;text-shadow:0 7px 25px #0008}
+.feature-art small{font-size:10px;letter-spacing:4px;color:#e7d7bb}
+.feature-art.cover-shinobi:before{border-color:#f0b07888;box-shadow:0 0 55px #ed805533}
+@media(max-width:900px){.feature-art{min-height:180px}.feature-glyph{font-size:55px}}
+@media(max-width:460px){.feature-art{min-height:155px}.feature-glyph{font-size:48px}}
