@@ -31,6 +31,7 @@ jobs:
           node --check reader-controls.js
           node --check site-analytics.js
           node --check stats-dashboard.js
+          node --check admin.js
           node --check scripts/build.mjs
       - name: Build and publish generated chapters safely
         shell: bash
@@ -45,6 +46,7 @@ jobs:
             node --check reader-controls.js
             node --check site-analytics.js
             node --check stats-dashboard.js
+            node --check admin.js
             node --check scripts/build.mjs
             node scripts/build.mjs
             node --input-type=module <<'NODE'
@@ -74,6 +76,9 @@ jobs:
           }
           if (!fs.readFileSync("script.js", "utf8").includes('fetch("catalog.json")')) fail("Homepage script is not loading the catalog.");
           if (!fs.existsSync("stats.html") || !fs.existsSync("site-analytics.js") || !fs.existsSync("stats-dashboard.js")) fail("Analytics files are missing.");
+          if (!fs.existsSync("admin.html") || !fs.existsSync("admin.css") || !fs.existsSync("admin.js")) fail("Admin dashboard files are missing.");
+          if (!fs.readFileSync("admin.html", "utf8").includes("admin.js")) fail("Admin dashboard script is not connected.");
+          if (!fs.readFileSync("admin.js", "utf8").includes("content/novels.json")) fail("Admin dashboard cannot load the novel manifest.");
           if (!fs.readFileSync("stats.html", "utf8").includes("stats-dashboard.js")) fail("Stats dashboard script is not connected.");
           console.log("Validation passed: " + catalog.novels.length + " novels, " + chapterCount + " chapters.");
           NODE
