@@ -67,10 +67,11 @@ jobs:
             }
           }
           const home = fs.readFileSync("index.html", "utf8");
-          for (const marker of ["catalog.json", "script.js", "style.css", "stats.html"]) {
+          for (const marker of ["script.js", "style.css", "stats.html"]) {
             if (!home.includes(marker)) fail("Homepage is missing " + marker);
           }
-          if (!fs.existsSync("stats.html") || !fs.existsSync("site-analytics.js")) fail("Analytics files are missing.");
+          if (!fs.readFileSync("script.js", "utf8").includes('fetch("catalog.json")')) fail("Homepage script is not loading the catalog.");
+if (!fs.existsSync("stats.html") || !fs.existsSync("site-analytics.js")) fail("Analytics files are missing.");
           console.log("Validation passed: " + catalog.novels.length + " novels, " + chapterCount + " chapters.");
           NODE
             git add -A
