@@ -25,6 +25,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Validate JavaScript
+        run: |
+          node --check script.js
+          node --check reader-controls.js
+          node --check site-analytics.js
+          node --check scripts/build.mjs
       - name: Build and publish generated chapters safely
         shell: bash
         run: |
@@ -34,7 +40,39 @@ jobs:
             echo "Build attempt $attempt"
             git fetch origin main
             git reset --hard origin/main
+            node --check script.js
+            node --check reader-controls.js
+            node --check site-analytics.js
+            node --check scripts/build.mjs
             node scripts/build.mjs
+            node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          import path from "node:path";
+          const fail = message => { console.error(message); process.exit(1); };
+          const catalog = JSON.parse(fs.readFileSync("catalog.json", "utf8"));
+          if (!Array.isArray(catalog.novels) || catalog.novels.length === 0) fail("Catalog has no novels.");
+          let chapterCount = 0;
+          for (const novel of catalog.novels) {
+            if (!fs.existsSync(novel.link)) fail("Missing novel index: " + novel.link);
+            const indexHtml = fs.readFileSync(novel.link, "utf8");
+            if (!indexHtml.includes("site-analytics.js")) fail("Analytics script missing from: " + novel.link);
+            for (const chapter of novel.chapters) {
+              const file = chapter.url;
+              if (!fs.existsSync(file)) fail("Missing generated chapter: " + file);
+              const html = fs.readFileSync(file, "utf8");
+              for (const marker of ["reader-toolbar", "reader-controls.js", "site-analytics.js", "chapterContent", "readingProgress"]) {
+                if (!html.includes(marker)) fail("Chapter " + file + " is missing " + marker);
+              }
+              chapterCount++;
+            }
+          }
+          const home = fs.readFileSync("index.html", "utf8");
+          for (const marker of ["catalog.json", "script.js", "style.css", "stats.html"]) {
+            if (!home.includes(marker)) fail("Homepage is missing " + marker);
+          }
+          if (!fs.existsSync("stats.html") || !fs.existsSync("site-analytics.js")) fail("Analytics files are missing.");
+          console.log("Validation passed: " + catalog.novels.length + " novels, " + chapterCount + " chapters.");
+          NODE
             git add -A
             if git diff --cached --quiet; then
               echo "No generated changes."
