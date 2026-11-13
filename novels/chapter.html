@@ -384,5 +384,5 @@
 ];
 const n=Math.max(1,Math.min(chapters.length,Number(new URLSearchParams(location.search).get("c"))||1));const chapterBody=document.getElementById("chapterBody");chapterBody.innerHTML='<div class="chapter-label">الفصل '+n+' من '+chapters.length+'</div><h1>'+chapters[n-1][0]+'</h1>'+chapters[n-1][1].map(p=>'<p>'+p+'</p>').join('');
 function controls(){return '<a class="'+(n===1?'disabled':'')+'" href="chapter.html?c='+(n-1)+'">← الفصل السابق</a><a href="saint-of-seven-worlds.html">فهرس الرواية</a><a class="'+(n===chapters.length?'disabled':'')+'" href="chapter.html?c='+(n+1)+'">الفصل التالي →</a>';}
-document.getElementById("topControls").innerHTML=controls();document.getElementById("bottomControls").innerHTML=controls();document.title=chapters[n-1][0]+" — صعود قديس العوالم السبع";</script><script src="../reader-tools.js" defer></script>
+document.getElementById("topControls").innerHTML=controls();document.getElementById("bottomControls").innerHTML=controls();document.title=chapters[n-1][0]+" — صعود قديس العوالم السبع";</script><script src="../reader-tools.js?v=2 defer></script>
 </body></html>
