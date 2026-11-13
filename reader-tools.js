@@ -66,4 +66,8 @@
       message.textContent = "تم حفظ موضعك في الفصل " + chapter + ".";
     } catch (error) { message.textContent = "تعذر الحفظ على هذا الجهاز؛ يمكنك متابعة القراءة دون حفظ."; }
   });
+  const analytics = document.createElement("script");
+  analytics.src = "../site-analytics.js";
+  analytics.defer = true;
+  document.head.appendChild(analytics);
 })();
