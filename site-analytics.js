@@ -4,7 +4,8 @@
   const pathKey = (location.pathname || "/").toLowerCase()
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 70) || "home";
   const totalKey = namespace + "-total";
-  const pageKey = namespace + "-" + pathKey;
+  const chapterNumber = new URLSearchParams(location.search).get("c");
+  const pageKey = namespace + "-" + pathKey + (chapterNumber ? "-chapter-" + chapterNumber : "");
   const sessionKey = "won-analytics:" + location.pathname + location.search;
   const endpoint = "https://countapi.mileshilliard.com/api/v1/";
   const totalLabel = document.getElementById("siteVisitCount");
