@@ -1,27 +1,23 @@
 "use strict";
-const novels = [
-  { id:"saint-seven-worlds", title:"صعود قديس العوالم السبع", author:"عالم الروايات", genre:"فانتازيا • مغامرة", categories:["فانتازيا","مغامرة"], icon:"✦", status:"12 فصلًا", link:"novels/saint-of-seven-worlds.html" },
-  { id:"naruto-legacy", title:"ناروتو: إرث العوالم", author:"عالم الروايات", genre:"مغامرة • خيال • ناروتو", categories:["مغامرة","خيال","أكشن"], icon:"忍", status:"فصل واحد", link:"naruto-legacy-of-worlds/" }
-];
 const books = document.getElementById("books");
 const search = document.getElementById("search");
 const count = document.getElementById("resultCount");
 const empty = document.getElementById("emptyState");
+let novels = [];
 let activeCategory = "الكل";
-
+const norm = value => String(value || "").toLocaleLowerCase("ar");
+const escapeHtml = value => String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
 function render() {
-  const query = search.value.trim().toLocaleLowerCase("ar");
+  const query = norm(search.value.trim());
   const filtered = novels.filter(n => {
-    const text = [n.title,n.genre,n.author,...n.categories].join(" ").toLocaleLowerCase("ar");
-    return text.includes(query) && (activeCategory === "الكل" || n.categories.includes(activeCategory));
+    const haystack = [n.title,n.genre,n.author,n.description,...n.categories].join(" ");
+    return norm(haystack).includes(query) && (activeCategory === "الكل" || n.categories.includes(activeCategory));
   });
   books.innerHTML = filtered.map(n => `
-    <article class="book">
-      <a class="book-link" href="${n.link}" aria-label="افتح رواية ${n.title}">
-        <div class="cover cover-${n.id}" aria-hidden="true"><span>${n.icon}</span><small>عالم الروايات</small></div>
-        <div class="book-info"><span class="book-status">${n.status}</span><h3>${n.title}</h3><p>${n.author} — ${n.genre}</p><span class="read-link">افتح الرواية <b aria-hidden="true">←</b></span></div>
-      </a>
-    </article>`).join("");
+    <article class="book"><a class="book-link" href="${escapeHtml(n.link)}" aria-label="افتح رواية ${escapeHtml(n.title)}">
+      <div class="cover cover-${escapeHtml(n.id)}" aria-hidden="true"><span>${escapeHtml(n.icon)}</span><small>عالم الروايات</small></div>
+      <div class="book-info"><span class="book-status">${n.count} فصل</span><h3>${escapeHtml(n.title)}</h3><p>${escapeHtml(n.author)} — ${escapeHtml(n.genre)}</p><span class="read-link">افتح الرواية <b aria-hidden="true">←</b></span></div>
+    </a></article>`).join("");
   count.textContent = `عدد النتائج: ${filtered.length}`;
   empty.hidden = filtered.length !== 0;
 }
@@ -39,15 +35,11 @@ document.getElementById("showAll").addEventListener("click", () => {
   search.value = "";
   chooseCategory("الكل");
 });
-document.querySelectorAll("[data-category]").forEach(button =>
-  button.addEventListener("click", () => chooseCategory(button.dataset.category))
-);
-document.querySelectorAll("[data-pick-category]").forEach(button =>
-  button.addEventListener("click", () => {
-    chooseCategory(button.dataset.pickCategory);
-    document.getElementById("novels").scrollIntoView({behavior:"smooth"});
-  })
-);
+document.querySelectorAll("[data-category]").forEach(button => button.addEventListener("click", () => chooseCategory(button.dataset.category)));
+document.querySelectorAll("[data-pick-category]").forEach(button => button.addEventListener("click", () => {
+  chooseCategory(button.dataset.pickCategory);
+  document.getElementById("novels").scrollIntoView({behavior:"smooth"});
+}));
 const menuToggle = document.getElementById("menuToggle");
 const mainNav = document.getElementById("mainNav");
 menuToggle.addEventListener("click", () => {
@@ -61,17 +53,25 @@ mainNav.querySelectorAll("a").forEach(link => link.addEventListener("click", () 
   menuToggle.setAttribute("aria-label","فتح القائمة");
   mainNav.classList.remove("open");
 }));
-try {
-  const saved = JSON.parse(localStorage.getItem("worldOfNovels:lastRead") || "null");
-  if (saved && novels.some(n => n.id === saved.id)) {
-    const novel = novels.find(n => n.id === saved.id);
-    const card = document.getElementById("continueCard");
-    document.getElementById("continueTitle").textContent = novel.title;
-    document.getElementById("continueDetails").textContent = saved.chapter ? `آخر موضع محفوظ: الفصل ${saved.chapter}` : "تابع من حيث توقفت.";
-    document.getElementById("continueLink").href = novel.id === "naruto-legacy"
-      ? `naruto-legacy-of-worlds/chapter.html?c=${saved.chapter || 1}`
-      : `novels/chapter.html?c=${saved.chapter || 1}`;
-    card.hidden = false;
-  }
-} catch (error) { console.warn("تعذر قراءة موضع القراءة المحفوظ.", error); }
-render();
+fetch("catalog.json").then(response => {
+  if (!response.ok) throw new Error("Catalog request failed");
+  return response.json();
+}).then(data => {
+  novels = data.novels || [];
+  render();
+  try {
+    const saved = JSON.parse(localStorage.getItem("worldOfNovels:lastRead") || "null");
+    const novel = novels.find(item => item.id === saved?.id);
+    const chapter = novel?.chapters?.find(item => item.number === Number(saved?.chapter));
+    if (novel && chapter) {
+      document.getElementById("continueTitle").textContent = novel.title;
+      document.getElementById("continueDetails").textContent = `آخر موضع محفوظ: الفصل ${chapter.number}`;
+      document.getElementById("continueLink").href = chapter.url;
+      document.getElementById("continueCard").hidden = false;
+    }
+  } catch (error) { console.warn("تعذر قراءة موضع القراءة المحفوظ.", error); }
+}).catch(error => {
+  console.error("تعذر تحميل فهرس الروايات.", error);
+  empty.hidden = false;
+  empty.textContent = "تعذر تحميل فهرس الروايات حاليًا. أعد تحميل الصفحة بعد قليل.";
+});
