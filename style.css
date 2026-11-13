@@ -78,3 +78,29 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:#92879a;font-size:1
 }
 @media(max-width:460px){.books{grid-template-columns:1fr}.cover{height:205px}.category-grid{grid-template-columns:repeat(2,1fr)}.section-head{align-items:start}.continue-card{align-items:stretch;flex-direction:column}.continue-card .primary{align-self:flex-start}.footer-inner{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* Shared novel and chapter templates */
+.reader{max-width:900px;margin:auto}
+.reader-head{text-align:center;margin-bottom:28px}
+.intro{background:#15121a;border:1px solid #2c2632;border-radius:18px;padding:clamp(22px,5vw,42px);margin:22px 0}
+.intro h2{text-align:center;color:var(--accent);margin:0 0 24px}
+.intro p{font-size:18px;line-height:2.2;color:#ddd;margin:0 0 18px}
+.chapter-list{display:grid;gap:10px;margin:20px 0}
+.chapter-link{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:15px 18px;background:#15121a;border:1px solid #2c2632;border-radius:12px;color:#eee;text-decoration:none;transition:border-color .2s,transform .2s}
+.chapter-link:hover{border-color:var(--accent);color:#e5c77b;transform:translateY(-1px)}
+.chapter-count{display:inline-block;margin:8px auto 0;padding:7px 16px;border:1px solid var(--accent);border-radius:30px;color:#e5c77b}
+.meta{color:#aaa}
+.chapter-link small{color:var(--accent)}
+.reader-page{max-width:900px;margin:28px auto;padding:0 16px}
+.reader-top{display:flex;justify-content:center;margin:12px 0 22px}
+.chapter{background:#15121a;border:1px solid #2c2632;border-radius:18px;padding:clamp(22px,5vw,45px)}
+.chapter h1{text-align:center;color:#e5c77b;margin:0 0 30px;font-size:clamp(23px,5vw,34px)}
+.chapter h3{color:var(--accent);margin:28px 0 12px}
+.chapter p{font-size:19px;line-height:2.25;color:#ddd;margin:0 0 22px}
+.chapter-label{text-align:center;color:#c99a5b;margin-bottom:10px}
+.controls{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin:18px 0}
+.controls a,.controls .disabled{background:#1b1721;color:#e5c77b;border:1px solid #3a3042;border-radius:9px;padding:9px 14px;text-decoration:none}
+.controls a:hover{border-color:var(--accent)}
+.controls .disabled{opacity:.35}
+.chapter .end{text-align:center;color:#e5c77b;margin-top:32px}
+@media(max-width:600px){.chapter{padding:20px 16px}.chapter p,.intro p{font-size:16px}.controls{justify-content:center}.chapter-link{align-items:flex-start;flex-direction:column}}
