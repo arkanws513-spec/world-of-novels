@@ -1,0 +1,195 @@
+{
+  "title": "عالم الروايات",
+  "novels": [
+    {
+      "id": "saint-seven-worlds",
+      "slug": "saint-seven-worlds",
+      "title": "صعود قديس العوالم السبع",
+      "author": "عالم الروايات",
+      "genre": "فانتازيا • مغامرة",
+      "categories": [
+        "فانتازيا",
+        "مغامرة"
+      ],
+      "icon": "✦",
+      "description": "رحلة يامن من ورشة ساعات متعثرة في قرية نيراف إلى أسرار العوالم السبعة والعهد القديم.",
+      "count": 30,
+      "link": "novels/saint-of-seven-worlds.html",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "الفصل الأول — الفتى الذي تأخر عن الجميع",
+          "url": "novels/saint-chapter-1.html"
+        },
+        {
+          "number": 2,
+          "title": "الفصل الثاني — بيت لا ينام على صوت واحد",
+          "url": "novels/saint-chapter-2.html"
+        },
+        {
+          "number": 3,
+          "title": "الفصل الثالث — سوق نيراف يعرف الجميع",
+          "url": "novels/saint-chapter-3.html"
+        },
+        {
+          "number": 4,
+          "title": "الفصل الرابع — أبناء العائلات الكبيرة",
+          "url": "novels/saint-chapter-4.html"
+        },
+        {
+          "number": 5,
+          "title": "الفصل الخامس — صديق الأمس",
+          "url": "novels/saint-chapter-5.html"
+        },
+        {
+          "number": 6,
+          "title": "الفصل السادس — ساعة لا يستطيع أحد إصلاحها",
+          "url": "novels/saint-chapter-6.html"
+        },
+        {
+          "number": 7,
+          "title": "الفصل السابع — صحراء النار",
+          "url": "novels/saint-chapter-7.html"
+        },
+        {
+          "number": 8,
+          "title": "الفصل الثامن — الجبل المعلّق",
+          "url": "novels/saint-chapter-8.html"
+        },
+        {
+          "number": 9,
+          "title": "الفصل التاسع — مملكة الثلج",
+          "url": "novels/saint-chapter-9.html"
+        },
+        {
+          "number": 10,
+          "title": "الفصل العاشر — حراس الصفر",
+          "url": "novels/saint-chapter-10.html"
+        },
+        {
+          "number": 11,
+          "title": "الفصل الحادي عشر — نيراف الجديدة",
+          "url": "novels/saint-chapter-11.html"
+        },
+        {
+          "number": 12,
+          "title": "الفصل الثاني عشر — الرجل الذي رأى الباب",
+          "url": "novels/saint-chapter-12.html"
+        },
+        {
+          "number": 13,
+          "title": "الفصل الثالث عشر — الطريق الذي لا يظهر على الخرائط",
+          "url": "novels/saint-chapter-13.html"
+        },
+        {
+          "number": 14,
+          "title": "الفصل الرابع عشر — قرية بلا ظلال",
+          "url": "novels/saint-chapter-14.html"
+        },
+        {
+          "number": 15,
+          "title": "الفصل الخامس عشر — أثر الحارس الأول",
+          "url": "novels/saint-chapter-15.html"
+        },
+        {
+          "number": 16,
+          "title": "الفصل السادس عشر — سجل الذين اختاروا",
+          "url": "novels/saint-chapter-16.html"
+        },
+        {
+          "number": 17,
+          "title": "الفصل السابع عشر — وجه أورين",
+          "url": "novels/saint-chapter-17.html"
+        },
+        {
+          "number": 18,
+          "title": "الفصل الثامن عشر — القرار الذي لم يتخذه أحد",
+          "url": "novels/saint-chapter-18.html"
+        },
+        {
+          "number": 19,
+          "title": "الفصل التاسع عشر — مرفأ السكون",
+          "url": "novels/saint-chapter-19.html"
+        },
+        {
+          "number": 20,
+          "title": "الفصل العشرون — دار الأسماء",
+          "url": "novels/saint-chapter-20.html"
+        },
+        {
+          "number": 21,
+          "title": "الفصل الحادي والعشرون — مطاردة بلا وجوه",
+          "url": "novels/saint-chapter-21.html"
+        },
+        {
+          "number": 22,
+          "title": "الفصل الثاني والعشرون — برج الصدى",
+          "url": "novels/saint-chapter-22.html"
+        },
+        {
+          "number": 23,
+          "title": "الفصل الثالث والعشرون — الاسم الذي محاه الزمن",
+          "url": "novels/saint-chapter-23.html"
+        },
+        {
+          "number": 24,
+          "title": "الفصل الرابع والعشرون — حين يختلف الحلفاء",
+          "url": "novels/saint-chapter-24.html"
+        },
+        {
+          "number": 25,
+          "title": "الفصل الخامس والعشرون — الطريقان",
+          "url": "novels/saint-chapter-25.html"
+        },
+        {
+          "number": 26,
+          "title": "الفصل السادس والعشرون — بيت الذاكرة الأخيرة",
+          "url": "novels/saint-chapter-26.html"
+        },
+        {
+          "number": 27,
+          "title": "الفصل السابع والعشرون — نادر يختار",
+          "url": "novels/saint-chapter-27.html"
+        },
+        {
+          "number": 28,
+          "title": "الفصل الثامن والعشرون — المفتاح الذي يوقف الزمن",
+          "url": "novels/saint-chapter-28.html"
+        },
+        {
+          "number": 29,
+          "title": "الفصل التاسع والعشرون — تحت برج الساعات",
+          "url": "novels/saint-chapter-29.html"
+        },
+        {
+          "number": 30,
+          "title": "الفصل الثلاثون — قاعة الميزان",
+          "url": "novels/saint-chapter-30.html"
+        }
+      ]
+    },
+    {
+      "id": "naruto-legacy",
+      "slug": "naruto-legacy-of-worlds",
+      "title": "ناروتو: إرث العوالم",
+      "author": "عالم الروايات",
+      "genre": "مغامرة • خيال • ناروتو",
+      "categories": [
+        "مغامرة",
+        "خيال",
+        "أكشن"
+      ],
+      "icon": "忍",
+      "description": "حكاية جديدة في عالم ناروتو، حيث يعود الجيل السابق إلى قلب الأحداث ويواجه الجيل الجديد إرثًا ثقيلًا.",
+      "count": 1,
+      "link": "naruto-legacy-of-worlds/index.html",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "الفصل الأول: ما وراء الأفق",
+          "url": "naruto-legacy-of-worlds/chapter-1.html"
+        }
+      ]
+    }
+  ]
+}
