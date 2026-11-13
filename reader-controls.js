@@ -63,7 +63,7 @@
   addEventListener("scroll", savePosition, { passive: true });
   addEventListener("pagehide", savePosition);
   savePosition();
-  const words = (article.innerText || "").trim().split(/\\s+/).filter(Boolean).length;
+  const words = (article.innerText || "").trim().split(/\s+/).filter(Boolean).length;
   const minutes = Math.max(1, Math.ceil(words / 220));
   const time = document.getElementById("readingTime");
   if (time) time.textContent = "وقت القراءة التقريبي: " + minutes + " دقيقة";
