@@ -8,7 +8,7 @@
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://arkanws513-spec.github.io/world-of-novels/">
   <title>عالم الروايات | مكتبة الحكايات</title>
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <header class="site-header">
@@ -16,35 +16,38 @@
     <a class="logo" href="./" aria-label="عالم الروايات - الرئيسية">عالم <span>الروايات</span></a>
     <button class="menu" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mainNav">☰</button>
     <nav id="mainNav" aria-label="القائمة الرئيسية">
-      <a href="#home">الرئيسية</a><a href="#novels">المكتبة</a><a href="#categories">التصنيفات</a><a href="#about">عن الموقع</a>
+      <a href="#home">الرئيسية</a><a href="#novels">المكتبة</a><a href="#latest">أحدث الفصول</a><a href="#categories">التصنيفات</a><a href="#about">عن الموقع</a>
     </nav>
   </div>
 </header>
 <main id="home">
 <section class="hero">
   <div class="container hero-content">
-    <div>
+    <div class="hero-copy">
       <p class="eyebrow">مساحة للخيال والحكايات</p>
-      <h1>افتح كتابًا،<br><span>واكتشف عالمًا جديدًا</span></h1>
-      <p class="hero-text">اقرأ رواياتنا، تنقّل بين الفصول بسهولة، واحفظ موضعك لتعود إلى الحكاية متى شئت.</p>
-      <a class="primary" href="#novels">استكشف المكتبة</a>
+      <h1>كل حكاية،<br><span>بوابة إلى عالم آخر</span></h1>
+      <p class="hero-text">اكتشف عوالم جديدة، تعرّف إلى أبطالها، وعش تفاصيل الحكاية فصلًا بعد فصل. مكتبتك العربية تكبر مع كل قصة جديدة.</p>
+      <div class="hero-actions"><a class="primary" href="#novels">استكشف المكتبة</a><a class="text-link" href="#latest">اكتشف آخر الفصول ←</a></div>
+      <div class="hero-trust"><span><b>✦</b> قراءة مريحة</span><span><b>◈</b> فصول مرتبة</span><span><b>⌁</b> تابع من حيث توقفت</span></div>
     </div>
-    <aside class="hero-card" aria-label="رواية مقترحة">
-      <div class="book-mark">✦</div><p>من عوالمنا</p><h2>ناروتو: إرث العوالم</h2><span>مغامرة • خيال</span>
-      <a class="feature-link" href="naruto-legacy-of-worlds/">اكتشف الرواية ←</a>
+    <aside class="hero-feature" id="featuredNovel" aria-label="رواية مختارة">
+      <div class="feature-glow"></div><div class="feature-cover"><span class="feature-symbol">✦</span><small>عالم الروايات</small></div>
+      <div class="feature-info"><span class="eyebrow">من مكتبتنا</span><h2>اكتشف رواياتنا</h2><p>حكايات تنتظر أن تبدأها.</p><a href="#novels" class="feature-link">تصفّح الأعمال ←</a></div>
     </aside>
   </div>
 </section>
+<section class="stats-strip">
+  <div class="container stats-grid">
+    <div><strong id="totalNovels">—</strong><span>رواية في المكتبة</span></div>
+    <div><strong id="totalChapters">—</strong><span>فصل متاح للقراءة</span></div>
+    <div><strong>24/7</strong><span>مكتبتك متاحة دائمًا</span></div>
+  </div>
+</section>
 <section class="container section" id="novels">
-  <div class="section-head"><div><p class="eyebrow">رفوف المكتبة</p><h2>الروايات</h2><p class="section-note">اختر حكايتك التالية وابدأ القراءة.</p></div><button class="ghost" id="showAll" type="button">عرض الكل</button></div>
-  <div class="search-row"><label class="sr-only" for="search">ابحث عن رواية</label><input id="search" type="search" placeholder="ابحث بالاسم أو النوع..." autocomplete="off"><span id="resultCount" class="result-count" aria-live="polite"></span></div>
+  <div class="section-head"><div><p class="eyebrow">رفوف المكتبة</p><h2>اختر حكايتك التالية</h2><p class="section-note">كل رواية لها عالمها، وشخصياتها، وأسرارها.</p></div><span class="library-count" id="libraryCount">المكتبة</span></div>
+  <div class="search-row"><label class="sr-only" for="search">ابحث عن رواية</label><input id="search" type="search" placeholder="ابحث باسم الرواية أو الكاتب أو التصنيف..." autocomplete="off"><label class="sr-only" for="sortNovels">ترتيب الروايات</label><select id="sortNovels" aria-label="ترتيب الروايات"><option value="featured">الترتيب المقترح</option><option value="chapters">الأكثر فصولًا</option><option value="title">الاسم: أ إلى ي</option></select><span id="resultCount" class="result-count" aria-live="polite"></span></div>
   <div class="filter-row" id="categoryFilters" aria-label="تصفية حسب التصنيف">
     <button class="filter active" type="button" data-category="الكل" aria-pressed="true">الكل</button>
-    <button class="filter" type="button" data-category="فانتازيا" aria-pressed="false">فانتازيا</button>
-    <button class="filter" type="button" data-category="خيال" aria-pressed="false">خيال</button>
-    <button class="filter" type="button" data-category="مغامرة" aria-pressed="false">مغامرة</button>
-    <button class="filter" type="button" data-category="أكشن" aria-pressed="false">أكشن</button>
-    <button class="filter" type="button" data-category="دراما" aria-pressed="false">دراما</button>
   </div>
   <div class="books" id="books" aria-live="polite"></div>
   <p id="emptyState" class="empty-state" hidden>لا توجد روايات تطابق بحثك. جرّب كلمة أخرى أو اختر «الكل».</p>
@@ -53,11 +56,17 @@
     <a class="primary" id="continueLink" href="#novels">متابعة القراءة</a>
   </section>
 </section>
-<section class="categories section" id="categories"><div class="container"><p class="eyebrow">مساحات مختلفة</p><h2>اختر نوع الحكاية</h2><div class="category-grid"><button type="button" data-pick-category="فانتازيا">فانتازيا</button><button type="button" data-pick-category="خيال">خيال</button><button type="button" data-pick-category="غموض">غموض</button><button type="button" data-pick-category="مغامرة">مغامرة</button><button type="button" data-pick-category="أكشن">أكشن</button><button type="button" data-pick-category="دراما">دراما</button></div></div></section>
-<section class="container about section" id="about"><p class="eyebrow">عن عالم الروايات</p><h2>مكتبة تنمو مع حكاياتها</h2><p>مساحة عربية تجمع الروايات التي نعمل عليها، وتمنح القارئ طريقًا واضحًا إلى المقدمة والفهرس والفصول. نضيف الأعمال والفصول تدريجيًا، مع الحفاظ على سهولة القراءة على الهاتف والحاسوب.</p></section>
+<section class="latest-section section" id="latest">
+  <div class="container">
+    <div class="section-head"><div><p class="eyebrow">لا تفوّت جديد الحكايات</p><h2>أحدث الفصول المتاحة</h2><p class="section-note">تابع آخر نقطة وصلت إليها كل رواية.</p></div></div>
+    <div class="latest-grid" id="latestChapters"><p class="section-note">جارٍ تحميل الفصول...</p></div>
+  </div>
+</section>
+<section class="categories section" id="categories"><div class="container"><p class="eyebrow">مساحات مختلفة</p><h2>تصفّح حسب النوع</h2><p class="section-note">اختر التصنيف الذي يناسب مزاج القراءة.</p><div class="category-grid" id="categoryTiles"></div></div></section>
+<section class="container about section" id="about"><p class="eyebrow">عن عالم الروايات</p><h2>أكثر من مجرد فهرس للفصول</h2><p>عالم الروايات مكتبة عربية تجمع الحكايات في مكان واحد، وتمنح كل عمل مساحته الخاصة للتعريف بعالمه وشخصياته وفصوله. نطوّر تجربة القراءة باستمرار لتكون واضحة ومريحة على الهاتف والحاسوب، مع الحفاظ على سهولة العودة إلى موضعك.</p></section>
 </main>
 <footer><div class="container footer-inner"><span>© 2026 عالم الروايات</span><a href="stats.html">إحصائيات الزيارات</a><a href="#home">العودة إلى الأعلى ↑</a></div></footer>
 <script src="site-analytics.js" defer></script>
-<script src="script.js?v=6" defer></script>
+<script src="script.js?v=7" defer></script>
 </body>
 </html>
