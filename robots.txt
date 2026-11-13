@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arkanws513-spec.github.io/world-of-novels/sitemap.xml
