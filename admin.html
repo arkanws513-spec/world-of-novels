@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#100e16">
+<title>إدارة المحتوى — عالم الروايات</title>
+<link rel="stylesheet" href="style.css?v=7"><link rel="stylesheet" href="admin.css?v=1">
+</head>
+<body class="admin-body">
+<header class="site-header"><div class="container nav"><a class="logo" href="./">عالم <span>الروايات</span></a><a class="ghost" href="./">← العودة للمكتبة</a></div></header>
+<main class="container admin-shell">
+<section class="admin-heading"><div><p class="eyebrow">مركز إدارة المحتوى</p><h1>لوحة إدارة الروايات والفصول</h1><p>إدارة بيانات الروايات، كتابة الفصول، حفظ مسوداتك، ثم تصدير الملفات لتحديث الموقع.</p></div><div class="admin-status" id="adminStatus" role="status">جارٍ تحميل بيانات المكتبة…</div></section>
+<div class="admin-warning"><strong>تنبيه أمان وتشغيل:</strong> هذه لوحة تحرير محلية لموقع GitHub Pages. التعديلات تُحفظ في هذا المتصفح وتُصدّر كملفات؛ لا تضع فيها كلمات مرور أو مفاتيح وصول. لن يظهر أي تعديل للقراء قبل رفع الملفات إلى المستودع وإتمام النشر.</div>
+<div class="admin-toolbar"><button class="admin-btn primary-btn" id="exportManifest">تصدير ملف بيانات الروايات</button><button class="admin-btn" id="exportAll">تصدير كل الملفات المعدّلة</button><button class="admin-btn" id="discardDrafts">حذف المسودات المحلية</button><a class="admin-btn subtle-btn" href="https://github.com/arkanws513-spec/world-of-novels">فتح مستودع GitHub ↗</a></div>
+<div class="admin-layout">
+<aside class="admin-panel novel-sidebar"><div class="panel-head"><h2>الروايات</h2><button class="mini-btn" id="addNovel">＋ رواية جديدة</button></div><div id="novelList" class="novel-list"></div></aside>
+<section class="admin-workspace">
+<div class="admin-panel"><div class="panel-head"><h2>بيانات الرواية</h2><span class="draft-pill" id="draftBadge">لا توجد تعديلات</span></div>
+<form id="novelForm" class="admin-form">
+<div class="form-grid"><label>عنوان الرواية<input id="novelTitle" required maxlength="120"></label><label>اسم الكاتب<input id="novelAuthor" maxlength="80"></label><label>التصنيف العام<input id="novelGenre" maxlength="120"></label><label>الرمز أو الأيقونة<input id="novelIcon" maxlength="8"></label><label class="wide">التصنيفات (افصل بينها بفاصلة)<input id="novelCategories" placeholder="فانتازيا، مغامرة، أكشن"></label><label class="wide">وصف الرواية<textarea id="novelDescription" rows="3" maxlength="500"></textarea></label></div>
+<div class="form-actions"><button class="admin-btn primary-btn" type="submit">حفظ بيانات الرواية في المسودة</button><button class="admin-btn danger-btn" type="button" id="removeNovel">حذف الرواية من الفهرس</button></div>
+</form></div>
+<div class="admin-panel chapter-panel"><div class="panel-head"><div><h2>إدارة الفصول</h2><p id="chapterSummary">اختر رواية لعرض فصولها.</p></div><button class="mini-btn" id="addChapter">＋ فصل جديد</button></div>
+<div class="chapter-editor-layout"><div id="chapterList" class="chapter-list-admin"></div><div class="chapter-editor"><div class="form-grid"><label>رقم الفصل<input id="chapterNumber" type="number" min="1" step="1" readonly></label><label>عنوان الفصل<input id="chapterTitle" maxlength="180"></label></div><label class="content-label">محتوى الفصل (Markdown)<textarea id="chapterContent" rows="18" placeholder="اكتب الفصل هنا…"></textarea></label><div class="form-actions"><button class="admin-btn primary-btn" id="saveChapter" type="button">حفظ الفصل في المسودة</button><button class="admin-btn" id="downloadChapter" type="button">تنزيل ملف الفصل</button></div><p class="editor-hint">يدعم محرّك الموقع العناوين التي تبدأ بـ # و ###، والفقرات، والتغميق باستخدام **النص**.</p></div></div></div>
+</section></div>
+<section class="admin-panel export-help"><h2>كيف تنشر التعديلات؟</h2><ol><li>احفظ بيانات الرواية والفصول في المسودة.</li><li>نزّل ملف <code>content/novels.json</code> واستبدل الملف نفسه في المستودع.</li><li>نزّل ملفات الفصول الجديدة أو المعدّلة وضع كل ملف في مجلده الصحيح داخل <code>content/novels/</code>.</li><li>ارفع التغييرات إلى فرع <code>main</code>. سيقوم GitHub Actions ببناء صفحات القراءة ونشرها تلقائيًا.</li></ol><p>لا تحذف ملفات الفصول القديمة يدويًا إلا بعد مراجعة الفهرس؛ محرّك البناء يقرأ ملفات Markdown الموجودة داخل مجلد الرواية.</p></section>
+</main>
+<footer><div class="container footer-inner"><span>© 2026 عالم الروايات</span><a href="./">العودة للمكتبة</a></div></footer>
+<script src="admin.js?v=1" defer></script>
+</body></html>
