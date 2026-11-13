@@ -2,7 +2,7 @@
 layout: post
 title: "ناروتو: إرث العوالم — مقدمة الرواية"
 date: 2026-11-13
-permalink: /naruto-legacy-of-worlds/introduction/
+permalink: /archive/naruto-legacy-of-worlds/introduction/
 ---
 
 # ناروتو: إرث العوالم
