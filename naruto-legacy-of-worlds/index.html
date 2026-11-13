@@ -36,14 +36,15 @@ a{color:#c99a5b}
 <p><strong>«إرث العوالم»</strong> رواية مغامرة وصراع، تتناول معنى القوة والمسؤولية، والفرق بين حماية الآخرين والسيطرة عليهم، وبين التضحية من أجل الجميع والإيمان بأن على الجميع أن يتحملوا مسؤولياتهم.</p>
 <p>هذه ليست إعادة لحكاية انتهت، بل بداية حكاية جديدة في عالم ناروتو، حيث قد يكون الخطر القادم أكبر مما يتخيله أحد.</p>
 </article>
+<div class="reader-actions" id="chapterStart"><button class="primary" onclick="show(0)">قراءة الفصل الأول ←</button></div>
 
 <section aria-labelledby="chapterIndexTitle">
 <div class="reader-head"><p class="eyebrow">تابع أحداث الرواية</p><h2 id="chapterIndexTitle">فهرس الفصول</h2><div class="chapter-count" id="chapterCount">عدد الفصول: 1</div></div>
-<div class="chapter-nav" id="chapters"></div>
+<div class="chapter-nav" id="chapters" style="display:none"></div>
 </section>
 
-<article class="chapter" id="content"></article>
-<div class="reader-actions" id="bottomActions"></div>
+<article class="chapter" id="content" style="display:none"></article>
+<div class="reader-actions" id="bottomActions" style="display:none"></div>
 </section></main>
 <footer><div class="container">© 2026 عالم الروايات</div></footer>
 <script>
@@ -110,11 +111,11 @@ const nav=document.getElementById("chapters"),contentEl=document.getElementById(
 document.getElementById("chapterCount").textContent="عدد الفصول: "+chapters.length;
 function show(i){
  if(i<0||i>=chapters.length)return;
+ nav.style.display="flex";contentEl.style.display="block";document.getElementById("bottomActions").style.display="flex";
  nav.innerHTML=chapters.map((c,n)=>'<button class="'+(n===i?'active':'')+'" onclick="show('+n+')">الفصل '+(n+1)+'</button>').join("");
  contentEl.innerHTML='<div class="chapter-label">الفصل '+(i+1)+' من '+chapters.length+'</div><h2>'+chapters[i][0]+'</h2>'+chapters[i][1].map(([tag,txt])=>tag==="h3"?"<h3>"+txt+"</h3>":txt==="نهاية الفصل الأول"?'<p class="end"><strong>'+txt+'</strong></p>':"<p>"+txt+"</p>").join("");
  document.getElementById("bottomActions").innerHTML='<button '+(i===0?'disabled':'')+' onclick="show('+(i-1)+')">← الفصل السابق</button><button class="primary" onclick="document.getElementById(\'chapters\').scrollIntoView({behavior:\'smooth\'})">☰ الفهرس</button><button '+(i===chapters.length-1?'disabled':'')+' onclick="show('+(i+1)+')">الفصل التالي →</button>';
 }
-show(0);
 </script>
 </body>
 </html>
