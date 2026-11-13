@@ -1,6 +1,6 @@
 const novels=[
  {title:"صعود قديس العوالم السبع",author:"عالم الروايات",genre:"فانتازيا • مغامرة",icon:"✦",source:"أصلية",link:"novels/saint-of-seven-worlds.html"},
- {title:"ناروتو: إرث العوالم",author:"عالم الروايات",genre:"مغامرة • خيال • ناروتو",icon:"忍",source:"رواية جديدة",link:"naruto-legacy-of-worlds/chapter-1/"}
+ {title:"ناروتو: إرث العوالم",author:"عالم الروايات",genre:"مغامرة • خيال • ناروتو",icon:"忍",source:"رواية جديدة",link:"naruto-legacy-of-worlds/"}
 ];
 const books=document.getElementById("books"),search=document.getElementById("search");
 function render(list=novels){
