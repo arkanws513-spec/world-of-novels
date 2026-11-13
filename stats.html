@@ -3,24 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#100e16">
+<meta name="description" content="لوحة إحصائيات عالم الروايات: متابعة عدادات زيارات الروايات والفصول الأكثر قراءة.">
+<meta name="robots" content="noindex,nofollow">
 <title>إحصائيات الزيارات — عالم الروايات</title>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=7">
 <style>
-.stats-wrap{max-width:850px;margin:auto}.stats-card{background:#191520;border:1px solid #c99a5b;border-radius:16px;padding:24px;text-align:center;margin:22px 0}.stats-card p{color:#ddd;line-height:1.9}.stats-link{display:inline-block;margin-top:12px;background:#c99a5b;color:#17121b;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700}.stats-note{color:#aaa;line-height:1.9;font-size:13px}
+.stats-page{max-width:1100px;margin:auto}
+.stats-intro{max-width:720px;color:#bcb5c4;line-height:1.9}
+.stats-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:24px 0}
+.stats-updated{color:#aaa;font-size:13px}
+.stats-action{display:inline-flex;align-items:center;justify-content:center;background:#c99a5b;color:#17121b;padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:800}
+.stats-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:24px 0}
+.stats-metric,.stats-panel{background:linear-gradient(145deg,#211a29,#17131e);border:1px solid rgba(201,154,91,.24);border-radius:16px;padding:20px}
+.stats-metric span{display:block;color:#bcb5c4;font-size:13px}
+.stats-metric strong{display:block;font-size:clamp(25px,4vw,36px);color:#e5bd80;margin-top:8px;direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.stats-panel h2{font-size:19px;margin:0 0 8px}
+.stats-panel>p{color:#aaa;font-size:13px;line-height:1.8;margin:0 0 14px}
+.stats-list{display:grid;gap:10px}
+.stats-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.stats-row:last-child{border-bottom:0}
+.stats-row a{color:#eee;text-decoration:none;line-height:1.6}
+.stats-row a:hover{color:#e5bd80}
+.stats-count{color:#e5bd80;font-weight:800;direction:ltr;font-variant-numeric:tabular-nums}
+.stats-empty{color:#aaa;padding:14px 0;line-height:1.8}
+.stats-status{padding:13px 16px;border:1px solid rgba(201,154,91,.25);background:#1c1722;border-radius:12px;color:#d7c7ad;line-height:1.8}
+.stats-status.error{border-color:#a75c5c;color:#efcaca}
+.stats-note{color:#999;font-size:12px;line-height:1.8;margin-top:18px}
+@media(max-width:700px){.stats-overview{grid-template-columns:1fr 1fr}.stats-grid{grid-template-columns:1fr}.stats-metric:last-child{grid-column:1/-1}}
 </style>
 </head>
 <body>
 <header class="site-header"><div class="container nav"><a class="logo" href="./">عالم <span>الروايات</span></a><a class="ghost" href="./">← المكتبة</a></div></header>
-<main class="container section stats-wrap">
-<p class="eyebrow">لوحة متابعة الموقع</p><h1>إحصائيات الزيارات</h1>
-<section class="stats-card">
-<h2>لوحة GoatCounter</h2>
-<p>يتم تسجيل مشاهدات صفحات المكتبة والروايات والفصول في حساب GoatCounter الخاص بالموقع.</p>
-<a class="stats-link" href="https://akgame.goatcounter.com/" target="_blank" rel="noopener noreferrer">فتح إحصائيات الموقع</a>
+<main class="container section stats-page">
+<p class="eyebrow">مركز متابعة الأداء</p>
+<h1>إحصائيات عالم الروايات</h1>
+<p class="stats-intro">تابع عدادات صفحات المكتبة والروايات والفصول، واكتشف أكثر الفصول جذبًا للقرّاء. تُحمّل الأرقام مباشرة من GoatCounter ولا تُعرض أرقام تقديرية.</p>
+<div class="stats-toolbar">
+<span class="stats-updated" id="statsUpdated">جارٍ الاتصال بمصدر الإحصائيات…</span>
+<a class="stats-action" href="https://akgame.goatcounter.com/" target="_blank" rel="noopener noreferrer">لوحة GoatCounter الكاملة ↗</a>
+</div>
+<div class="stats-status" id="statsStatus" role="status" aria-live="polite">يتم الآن تحميل بيانات المكتبة وعدادات الزيارات.</div>
+<section class="stats-overview" aria-label="ملخص الزيارات">
+<div class="stats-metric"><span>مجموع عدادات الصفحات المقاسة</span><strong id="totalTracked">—</strong></div>
+<div class="stats-metric"><span>صفحات تم قياسها</span><strong id="measuredPages">—</strong></div>
+<div class="stats-metric"><span>الفصول ضمن المكتبة</span><strong id="chapterCount">—</strong></div>
 </section>
-<p class="stats-note">قد يستغرق ظهور الزيارة بضع لحظات. إذا بقيت الأرقام صفرًا، تحقق من أن كود GoatCounter منشور وأن مانع الإعلانات لا يحجب gc.zgo.at أو goatcounter.com.</p>
+<div class="stats-grid">
+<section class="stats-panel">
+<h2>الروايات الأكثر زيارة</h2><p>مجموع عدادات صفحة الرواية وفصولها، وليس عدد أشخاص فريدين.</p>
+<div class="stats-list" id="novelStats"><div class="stats-empty">جارٍ التحميل…</div></div>
+</section>
+<section class="stats-panel">
+<h2>الفصول الأكثر زيارة</h2><p>ترتيب الفصول حسب عداد الزيارات المسجل لكل فصل.</p>
+<div class="stats-list" id="chapterStats"><div class="stats-empty">جارٍ التحميل…</div></div>
+</section>
+<section class="stats-panel">
+<h2>صفحات المكتبة</h2><p>عدادات الصفحة الرئيسية وصفحات فهارس الروايات.</p>
+<div class="stats-list" id="libraryStats"><div class="stats-empty">جارٍ التحميل…</div></div>
+</section>
+<section class="stats-panel">
+<h2>مصادر الزيارات والتفاصيل</h2>
+<p>مصادر الإحالات، الدول، الأجهزة، والمتصفحات متاحة في لوحة GoatCounter الخاصة بالحساب.</p>
+<a class="stats-action" href="https://akgame.goatcounter.com/" target="_blank" rel="noopener noreferrer">عرض مصادر الزيارات ↗</a>
+</section>
+</div>
+<p class="stats-note">ملاحظة: مجموع العدادات يجمع الزيارات المسجلة لكل صفحة، ولا يمثل عدد زوار فريدين للموقع؛ فقد يزور الشخص أكثر من صفحة. إذا لم تظهر الأرقام، فعّل خيار السماح بعرض عدادات الزوار في إعدادات موقعك داخل GoatCounter. لا يتم وضع مفتاح API أو بيانات دخول داخل ملفات الموقع.</p>
 </main>
 <footer><div class="container footer-inner"><span>© 2026 عالم الروايات</span><a href="./">العودة للمكتبة</a></div></footer>
+<script src="site-analytics.js" defer></script>
+<script src="stats-dashboard.js?v=1" defer></script>
 </body></html>
