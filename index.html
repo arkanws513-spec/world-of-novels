@@ -3,41 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>عالم الروايات</title>
-  <meta name="description" content="عالم الروايات — مكانك لاكتشاف وقراءة الروايات.">
-  <link rel="stylesheet" href="style.css?v=2">
+  <meta name="theme-color" content="#100e16">
+  <meta name="description" content="عالم الروايات — مكتبة عربية لاكتشاف الروايات وقراءة فصولها ومتابعة تقدمك.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://arkanws513-spec.github.io/world-of-novels/">
+  <title>عالم الروايات | مكتبة الحكايات</title>
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <header class="site-header">
   <div class="container nav">
-    <a class="logo" href="#">عالم <span>الروايات</span></a>
-    <nav>
-      <a href="#home">الرئيسية</a><a href="#novels">الروايات</a><a href="#categories">التصنيفات</a><a href="#about">عن الموقع</a>
+    <a class="logo" href="./" aria-label="عالم الروايات - الرئيسية">عالم <span>الروايات</span></a>
+    <button class="menu" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mainNav">☰</button>
+    <nav id="mainNav" aria-label="القائمة الرئيسية">
+      <a href="#home">الرئيسية</a><a href="#novels">المكتبة</a><a href="#categories">التصنيفات</a><a href="#about">عن الموقع</a>
     </nav>
-    <button class="menu" aria-label="فتح القائمة">☰</button>
   </div>
 </header>
 <main id="home">
 <section class="hero">
   <div class="container hero-content">
     <div>
-      <p class="eyebrow">مرحبًا بك في عالم الروايات</p>
-      <h1>حكايات تأخذك<br><span>إلى عوالم أخرى</span></h1>
-      <p class="hero-text">اكتشف روايات جديدة، تابع فصولك المفضلة، واصنع قائمة القراءة الخاصة بك.</p>
-      <a class="primary" href="#novels">ابدأ القراءة</a>
+      <p class="eyebrow">مساحة للخيال والحكايات</p>
+      <h1>افتح كتابًا،<br><span>واكتشف عالمًا جديدًا</span></h1>
+      <p class="hero-text">اقرأ رواياتنا، تنقّل بين الفصول بسهولة، واحفظ موضعك لتعود إلى الحكاية متى شئت.</p>
+      <a class="primary" href="#novels">استكشف المكتبة</a>
     </div>
-    <div class="hero-card"><div class="book-mark">✦</div><p>رواية مميزة</p><h2>ناروتو: إرث العوالم</h2><span>مغامرة • خيال</span></div>
+    <aside class="hero-card" aria-label="رواية مقترحة">
+      <div class="book-mark">✦</div><p>من عوالمنا</p><h2>ناروتو: إرث العوالم</h2><span>مغامرة • خيال</span>
+      <a class="feature-link" href="naruto-legacy-of-worlds/">اكتشف الرواية ←</a>
+    </aside>
   </div>
 </section>
 <section class="container section" id="novels">
-  <div class="section-head"><div><p class="eyebrow">اكتشف</p><h2>رواياتنا</h2></div><button class="ghost" id="showAll">عرض الكل</button></div>
-  <div class="search-row"><input id="search" type="search" placeholder="ابحث عن رواية..." aria-label="ابحث عن رواية"></div>
-  <div class="books" id="books"></div>
+  <div class="section-head"><div><p class="eyebrow">رفوف المكتبة</p><h2>الروايات</h2><p class="section-note">اختر حكايتك التالية وابدأ القراءة.</p></div><button class="ghost" id="showAll" type="button">عرض الكل</button></div>
+  <div class="search-row"><label class="sr-only" for="search">ابحث عن رواية</label><input id="search" type="search" placeholder="ابحث بالاسم أو النوع..." autocomplete="off"><span id="resultCount" class="result-count" aria-live="polite"></span></div>
+  <div class="filter-row" id="categoryFilters" aria-label="تصفية حسب التصنيف">
+    <button class="filter active" type="button" data-category="الكل" aria-pressed="true">الكل</button>
+    <button class="filter" type="button" data-category="فانتازيا" aria-pressed="false">فانتازيا</button>
+    <button class="filter" type="button" data-category="خيال" aria-pressed="false">خيال</button>
+    <button class="filter" type="button" data-category="مغامرة" aria-pressed="false">مغامرة</button>
+    <button class="filter" type="button" data-category="أكشن" aria-pressed="false">أكشن</button>
+    <button class="filter" type="button" data-category="دراما" aria-pressed="false">دراما</button>
+  </div>
+  <div class="books" id="books" aria-live="polite"></div>
+  <p id="emptyState" class="empty-state" hidden>لا توجد روايات تطابق بحثك. جرّب كلمة أخرى أو اختر «الكل».</p>
+  <section class="continue-card" id="continueCard" hidden aria-label="متابعة القراءة">
+    <div><p class="eyebrow">عد إلى حكايتك</p><h3 id="continueTitle">متابعة القراءة</h3><p id="continueDetails"></p></div>
+    <a class="primary" id="continueLink" href="#novels">متابعة القراءة</a>
+  </section>
 </section>
-<section class="categories section" id="categories"><div class="container"><p class="eyebrow">اختر عالمك</p><h2>التصنيفات</h2><div class="category-grid"><button>فانتازيا</button><button>خيال</button><button>غموض</button><button>مغامرة</button><button>أكشن</button><button>دراما</button></div></div></section>
-<section class="container about section" id="about"><p class="eyebrow">عن عالم الروايات</p><h2>مكان يجمع القرّاء بالحكايات</h2><p>منصة تجمع الروايات التي نعمل عليها، ويمكنك من خلالها متابعة الفصول الجديدة والعودة إلى عوالمك المفضلة.</p></section>
+<section class="categories section" id="categories"><div class="container"><p class="eyebrow">مساحات مختلفة</p><h2>اختر نوع الحكاية</h2><div class="category-grid"><button type="button" data-pick-category="فانتازيا">فانتازيا</button><button type="button" data-pick-category="خيال">خيال</button><button type="button" data-pick-category="غموض">غموض</button><button type="button" data-pick-category="مغامرة">مغامرة</button><button type="button" data-pick-category="أكشن">أكشن</button><button type="button" data-pick-category="دراما">دراما</button></div></div></section>
+<section class="container about section" id="about"><p class="eyebrow">عن عالم الروايات</p><h2>مكتبة تنمو مع حكاياتها</h2><p>مساحة عربية تجمع الروايات التي نعمل عليها، وتمنح القارئ طريقًا واضحًا إلى المقدمة والفهرس والفصول. نضيف الأعمال والفصول تدريجيًا، مع الحفاظ على سهولة القراءة على الهاتف والحاسوب.</p></section>
 </main>
-<footer><div class="container">© 2026 عالم الروايات — جميع الحقوق محفوظة</div></footer>
-<script src="script.js?v=4"></script>
+<footer><div class="container footer-inner"><span>© 2026 عالم الروايات</span><a href="#home">العودة إلى الأعلى ↑</a></div></footer>
+<script src="script.js?v=5" defer></script>
 </body>
 </html>
