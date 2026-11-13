@@ -2,7 +2,7 @@
 layout: post
 title: "ناروتو: إرث العوالم — الفصل الأول: ما وراء الأفق"
 date: 2026-11-13
-permalink: /naruto-legacy-of-worlds/chapter-1/
+permalink: /archive/naruto-legacy-of-worlds/chapter-1/
 ---
 
 # ناروتو: إرث العوالم
