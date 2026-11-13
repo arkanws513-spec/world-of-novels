@@ -30,7 +30,6 @@ jobs:
           node --check script.js
           node --check reader-controls.js
           node --check site-analytics.js
-            node --check stats-dashboard.js
           node --check stats-dashboard.js
           node --check scripts/build.mjs
       - name: Build and publish generated chapters safely
@@ -45,6 +44,7 @@ jobs:
             node --check script.js
             node --check reader-controls.js
             node --check site-analytics.js
+            node --check stats-dashboard.js
             node --check scripts/build.mjs
             node scripts/build.mjs
             node --input-type=module <<'NODE'
