@@ -70,9 +70,9 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:#92879a;font-size:1
 @media(max-width:850px){.hero-content{gap:35px}.books{grid-template-columns:repeat(2,minmax(0,1fr))}.category-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:680px){
  .nav{min-height:64px}.menu{display:block}
- nav{display:none;position:absolute;top:64px;right:4%;left:4%;padding:12px;background:#1a1520;border:1px solid var(--line);border-radius:12px;box-shadow:0 15px 35px #0008}
- nav.open{display:flex;flex-direction:column;align-items:stretch;gap:0}
- nav a{padding:11px 12px;border-bottom:1px solid #302839}nav a:last-child{border:0}
+ #mainNav{display:none;position:absolute;top:64px;right:4%;left:4%;padding:12px;background:#1a1520;border:1px solid var(--line);border-radius:12px;box-shadow:0 15px 35px #0008}
+ #mainNav.open{display:flex;flex-direction:column;align-items:stretch;gap:0}
+ #mainNav a{padding:11px 12px;border-bottom:1px solid #302839}#mainNav a:last-child{border:0}
  .hero{min-height:0}.hero-content{grid-template-columns:1fr;padding-top:58px;padding-bottom:58px}.hero-card{display:none}
  .section{padding:55px 0}.hero h1{font-size:clamp(38px,10vw,48px)}.section h2{font-size:29px}
 }
