@@ -17,7 +17,7 @@
 <section class="admin-workspace">
 <div class="admin-panel"><div class="panel-head"><h2>بيانات الرواية</h2><span class="draft-pill" id="draftBadge">لا توجد تعديلات</span></div>
 <form id="novelForm" class="admin-form">
-<div class="form-grid"><label>عنوان الرواية<input id="novelTitle" required maxlength="120"></label><label>اسم الكاتب<input id="novelAuthor" maxlength="80"></label><label>التصنيف العام<input id="novelGenre" maxlength="120"></label><label>الرمز أو الأيقونة<input id="novelIcon" maxlength="8"></label><label class="wide">التصنيفات (افصل بينها بفاصلة)<input id="novelCategories" placeholder="فانتازيا، مغامرة، أكشن"></label><label class="wide">وصف الرواية<textarea id="novelDescription" rows="3" maxlength="500"></textarea></label></div>
+<div class="form-grid"><label>عنوان الرواية<input id="novelTitle" required maxlength="120"></label><label>اسم الكاتب<input id="novelAuthor" maxlength="80"></label><label>التصنيف العام<input id="novelGenre" maxlength="120"></label><label>الرمز أو الأيقونة<input id="novelIcon" maxlength="8"></label><label class="wide">التصنيفات (افصل بينها بفاصلة)<input id="novelCategories" placeholder="فانتازيا، مغامرة، أكشن"></label><label class="wide">وصف الرواية<textarea id="novelDescription" rows="3" maxlength="500"></textarea></label><label class="wide">مسار صورة الغلاف<input id="novelCover" placeholder="assets/cover.jpg"></label><label class="wide">حالة الرواية<input id="novelStatus" maxlength="80" placeholder="متاحة للقراءة أو قريباً"></label></div>
 <div class="form-actions"><button class="admin-btn primary-btn" type="submit">حفظ بيانات الرواية في المسودة</button><button class="admin-btn danger-btn" type="button" id="removeNovel">حذف الرواية من الفهرس</button></div>
 </form></div>
 <div class="admin-panel chapter-panel"><div class="panel-head"><div><h2>إدارة الفصول</h2><p id="chapterSummary">اختر رواية لعرض فصولها.</p></div><button class="mini-btn" id="addChapter">＋ فصل جديد</button></div>
@@ -26,5 +26,5 @@
 <section class="admin-panel export-help"><h2>كيف تنشر التعديلات؟</h2><ol><li>احفظ بيانات الرواية والفصول في المسودة.</li><li>نزّل ملف <code>content/novels.json</code> واستبدل الملف نفسه في المستودع.</li><li>نزّل ملفات الفصول الجديدة أو المعدّلة وضع كل ملف في مجلده الصحيح داخل <code>content/novels/</code>.</li><li>ارفع التغييرات إلى فرع <code>main</code>. سيقوم GitHub Actions ببناء صفحات القراءة ونشرها تلقائيًا.</li></ol><p>لا تحذف ملفات الفصول القديمة يدويًا إلا بعد مراجعة الفهرس؛ محرّك البناء يقرأ ملفات Markdown الموجودة داخل مجلد الرواية.</p></section>
 </main>
 <footer><div class="container footer-inner"><span>© 2026 عالم الروايات</span><a href="./">العودة للمكتبة</a></div></footer>
-<script src="admin.js?v=1" defer></script>
+<script src="admin.js?v=2" defer></script>
 </body></html>
