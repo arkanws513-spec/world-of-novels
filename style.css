@@ -230,3 +230,35 @@ body.reader-light .toolbar-group>span,body.reader-light .reading-time{color:#626
 .book-cover-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .feature-art-image{overflow:hidden;background:#080d1d}
 .feature-art-image img{display:block;width:100%;height:100%;object-fit:cover}
+
+
+/* Reader upgrades inspired by focused, accessible reading interfaces */
+.reader-toolbar select{
+  min-height:34px;max-width:min(260px,48vw);padding:5px 9px;
+  border:1px solid #51445a;border-radius:8px;background:#241e2a;color:#f1e8f2
+}
+.reader-toolbar select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.reader-toolbar button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:#382b35}
+.chapter{font-family:var(--reader-font-family,Tahoma,Arial,sans-serif)}
+.chapter p{text-align:justify;text-align-last:start;overflow-wrap:anywhere}
+.chapter a{color:var(--reader-accent,var(--accent));text-underline-offset:3px}
+body.reader-sepia{background:#e9ddc5;color:#3e3427}
+body.reader-sepia .reader-toolbar,body.reader-sepia .chapter{background:#f1e7d2;border-color:#cdbd9e}
+body.reader-sepia .chapter{--reader-fg:#3e3427;--reader-accent:#875b2d}
+body.reader-sepia .chapter p{color:#3e3427}
+body.reader-sepia .chapter h1,body.reader-sepia .chapter h3,body.reader-sepia .chapter-label,body.reader-sepia .chapter .end{color:#875b2d}
+body.reader-sepia .reader-toolbar button,body.reader-sepia .reader-toolbar select{background:#e9ddc5;color:#3e3427;border-color:#c8b795}
+body.reader-sepia .toolbar-group>span,body.reader-sepia .reading-time{color:#78684f}
+body.reader-sepia .controls a{background:#e9ddc5;color:#6f4a26;border-color:#c8b795}
+.reader-save-note{padding:5px 8px}
+@media(max-width:650px){
+  .reader-toolbar{display:grid;grid-template-columns:1fr;justify-items:stretch}
+  .toolbar-group{display:flex;justify-content:center;flex-wrap:wrap;gap:7px}
+  .reader-toolbar select{max-width:100%;flex:1 1 140px}
+  .reader-toolbar button{min-height:38px}
+  .reader-page{padding-bottom:28px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reader-toolbar button,.chapter{transition:none}
+}
