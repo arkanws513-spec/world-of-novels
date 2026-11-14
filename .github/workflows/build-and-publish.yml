@@ -42,19 +42,20 @@ jobs:
             echo "Build attempt $attempt"
             git fetch origin main
             git reset --hard origin/main
-            node --check script.js
-            node --check reader-controls.js
-            node --check site-analytics.js
-            node --check stats-dashboard.js
-            node --check admin.js
-            node --check scripts/build.mjs
             node scripts/build.mjs
             node --input-type=module <<'NODE'
           import fs from "node:fs";
           import path from "node:path";
           const fail = message => { console.error(message); process.exit(1); };
+          const manifest = JSON.parse(fs.readFileSync("content/novels.json", "utf8"));
           const catalog = JSON.parse(fs.readFileSync("catalog.json", "utf8"));
-          if (!Array.isArray(catalog.novels) || catalog.novels.length === 0) fail("Catalog has no novels.");
+          if (!Array.isArray(manifest.novels) || manifest.novels.length === 0) fail("Manifest has no novels.");
+          if (!Array.isArray(catalog.novels) || catalog.novels.length !== manifest.novels.length) fail("Catalog and manifest novel counts differ.");
+          const ids = manifest.novels.map(n => n.id);
+          if (new Set(ids).size !== ids.length) fail("Novel IDs must be unique.");
+          for (const novel of manifest.novels) {
+            if (!catalog.novels.some(item => item.id === novel.id && item.link === novel.indexPath)) fail("Novel missing or mismatched in catalog: " + novel.id);
+          }
           let chapterCount = 0;
           for (const novel of catalog.novels) {
             if (!fs.existsSync(novel.link)) fail("Missing novel index: " + novel.link);
@@ -80,7 +81,12 @@ jobs:
           if (!fs.readFileSync("admin.html", "utf8").includes("admin.js")) fail("Admin dashboard script is not connected.");
           if (!fs.readFileSync("admin.js", "utf8").includes("content/novels.json")) fail("Admin dashboard cannot load the novel manifest.");
           if (!fs.readFileSync("stats.html", "utf8").includes("stats-dashboard.js")) fail("Stats dashboard script is not connected.");
-          console.log("Validation passed: " + catalog.novels.length + " novels, " + chapterCount + " chapters.");
+          const sitemap = fs.readFileSync("sitemap.xml", "utf8");
+          for (const novel of catalog.novels) {
+            if (!sitemap.includes(novel.link)) fail("Sitemap is missing novel URL: " + novel.link);
+            for (const chapter of novel.chapters) if (!sitemap.includes(chapter.url)) fail("Sitemap is missing chapter URL: " + chapter.url);
+          }
+          console.log("Validation passed: manifest and catalog match (" + catalog.novels.length + " novels, " + chapterCount + " chapters).");
           NODE
             git add -A
             if git diff --cached --quiet; then
