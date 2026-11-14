@@ -190,6 +190,25 @@
           "url": "naruto-legacy-of-worlds/chapter-1.html"
         }
       ]
+    },
+    {
+      "id": "heirs-first-civilization",
+      "slug": "heirs-of-the-first-civilization",
+      "title": "ورثة الحضارة الأولى",
+      "author": "عالم الروايات",
+      "genre": "خيال علمي • فضاء • حضارات",
+      "categories": [
+        "خيال علمي",
+        "فضاء",
+        "حضارات"
+      ],
+      "icon": "✦",
+      "description": "من حلم إنسان واحد بالسكن في الفضاء إلى رحلة البشرية نحو بناء حضارة تتجاوز حدود الأرض.",
+      "status": "قريباً — قيد التأسيس",
+      "count": 0,
+      "link": "novels/heirs-of-the-first-civilization.html",
+      "chapters": [],
+      "cover": "assets/file_000000005df881f4b5450aa11ba40289.png"
     }
   ]
 }
