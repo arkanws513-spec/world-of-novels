@@ -59,6 +59,7 @@ jobs:
           let chapterCount = 0;
           for (const novel of catalog.novels) {
             if (!fs.existsSync(novel.link)) fail("Missing novel index: " + novel.link);
+            if (novel.cover && !fs.existsSync(novel.cover)) fail("Missing novel cover: " + novel.cover);
             const indexHtml = fs.readFileSync(novel.link, "utf8");
             if (!indexHtml.includes("site-analytics.js")) fail("Analytics script missing from: " + novel.link);
             for (const chapter of novel.chapters) {
@@ -79,8 +80,22 @@ jobs:
           if (!fs.existsSync("stats.html") || !fs.existsSync("site-analytics.js") || !fs.existsSync("stats-dashboard.js")) fail("Analytics files are missing.");
           if (!fs.existsSync("admin.html") || !fs.existsSync("admin.css") || !fs.existsSync("admin.js")) fail("Admin dashboard files are missing.");
           if (!fs.readFileSync("admin.html", "utf8").includes("admin.js")) fail("Admin dashboard script is not connected.");
-          if (!fs.readFileSync("admin.js", "utf8").includes("content/novels.json")) fail("Admin dashboard cannot load the novel manifest.");
+          const admin = fs.readFileSync("admin.js", "utf8");
+          if (!admin.includes("content/novels.json")) fail("Admin dashboard cannot load the novel manifest.");
+          if (!admin.includes("exportNovelPackage")) fail("Admin dashboard cannot export a standalone novel package.");
           if (!fs.readFileSync("stats.html", "utf8").includes("stats-dashboard.js")) fail("Stats dashboard script is not connected.");
+          const readerControls = fs.readFileSync("reader-controls.js", "utf8");
+          for (const feature of ["readerBookmark", "readerSpeak", "chapterJump", "worldOfNovels:lastRead"]) {
+            if (!readerControls.includes(feature)) fail("Reader feature is missing: " + feature);
+          }
+          if (!home.includes("bookmarksCard") || !fs.readFileSync("script.js", "utf8").includes("renderBookmarks")) fail("Homepage bookmark shelf is not connected.");
+          const novelRoot = "content/novels";
+          for (const folder of fs.readdirSync(novelRoot, { withFileTypes: true }).filter(item => item.isDirectory())) {
+            const metadataPath = path.join(novelRoot, folder.name, "novel.json");
+            if (!fs.existsSync(metadataPath)) continue;
+            const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
+            if (!manifest.novels.some(novel => novel.id === metadata.id)) fail("Novel package was not discovered: " + metadataPath);
+          }
           const sitemap = fs.readFileSync("sitemap.xml", "utf8");
           for (const novel of catalog.novels) {
             if (!sitemap.includes(novel.link)) fail("Sitemap is missing novel URL: " + novel.link);
