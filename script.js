@@ -23,13 +23,15 @@
   function render() {
     const filtered = filteredNovels();
     books.innerHTML = filtered.map(n => {
-      const firstChapter = n.chapters?.[0];
       return `<article class="book"><a class="book-link" href="${escapeHtml(n.link)}" aria-label="افتح رواية ${escapeHtml(n.title)}">
         ${coverMarkup(n)}
-        <div class="book-info"><div class="book-meta"><span class="book-status">${escapeHtml(n.status || "متاحة للقراءة")}</span><span class="chapter-total">${Number(n.count)>0 ? `${Number(n.count)} فصل` : "قريباً"}</span></div>
-          <h3>${escapeHtml(n.title)}</h3><p class="book-description">${escapeHtml(n.description)}</p>
-          <div class="book-tags">${(n.categories || []).slice(0,3).map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
-          <span class="read-link">اكتشف الرواية <b aria-hidden="true">←</b></span></div></a></article>`;
+        <div class="book-info">
+          <div class="book-meta"><span class="book-status">${escapeHtml(n.status || "متاحة للقراءة")}</span><span class="chapter-total">${Number(n.count)>0 ? `${Number(n.count)} فصل` : "قريباً"}</span></div>
+          <h3>${escapeHtml(n.title)}</h3>
+          <p class="book-description">${escapeHtml(n.description)}</p>
+          <div class="book-tags">${(n.categories || []).slice(0,2).map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
+          <span class="read-link">افتح الرواية <b aria-hidden="true">←</b></span>
+        </div></a></article>`;
     }).join("");
     count.textContent = `عدد النتائج: ${filtered.length}`;
     $("libraryCount").textContent = `${novels.length} أعمال في المكتبة`;
@@ -64,9 +66,12 @@
       <article class="latest-card"><div class="latest-mark">${escapeHtml(novel.icon || "✦")}</div><div class="latest-copy"><span class="eyebrow">${escapeHtml(novel.title)}</span><h3>${escapeHtml(chapter.title)}</h3><p>الفصل ${chapter.number} · ${novel.count} فصل متاح</p></div><a href="${escapeHtml(chapter.url)}" aria-label="اقرأ ${escapeHtml(chapter.title)}">اقرأ الفصل <b>←</b></a></article>`).join("") : "<p class='section-note'>ستظهر الفصول هنا عند إضافتها.</p>";
   }
   function renderFeatured() {
-    const n = novels[0];
+    const n = novels.find(item => item.id === "saint-seven-worlds") || novels[0];
     if (!n) return;
-    $("featuredNovel").innerHTML = `${n.cover ? `<div class="feature-art feature-art-image"><img src="${escapeHtml(n.cover)}" alt="غلاف ${escapeHtml(n.title)}"></div>` : `<div class="feature-art ${coverClass(n)}"><span class="feature-ring"></span><span class="feature-glyph">${escapeHtml(n.icon || "✦")}</span><small>من عوالمنا</small></div>`}<div class="feature-info"><span class="eyebrow">اختيار المكتبة</span><h2>${escapeHtml(n.title)}</h2><p>${escapeHtml(n.description)}</p><a class="feature-link" href="${escapeHtml(n.link)}">اكتشف الرواية ←</a></div>`;
+    const art = n.cover
+      ? `<div class="feature-art feature-art-image"><img src="${escapeHtml(n.cover)}" alt="غلاف ${escapeHtml(n.title)}" loading="eager"></div>`
+      : `<div class="feature-art ${coverClass(n)}"><span class="feature-ring"></span><span class="feature-glyph">${escapeHtml(n.icon || "✦")}</span><strong class="feature-art-title">${escapeHtml(n.title)}</strong><small>من عوالمنا</small></div>`;
+    $("featuredNovel").innerHTML = `<div class="feature-visual">${art}</div><div class="feature-info"><span class="eyebrow">اختيار المكتبة</span><h2>${escapeHtml(n.title)}</h2><p>${escapeHtml(n.description)}</p><div class="feature-meta"><span>${Number(n.count)>0 ? `${Number(n.count)} فصل متاح` : "قريباً"}</span><span>${escapeHtml((n.categories || []).slice(0,2).join(" · "))}</span></div><a class="feature-link" href="${escapeHtml(n.link)}">ابدأ الرحلة ←</a></div>`;
   }
   function renderContinue() {
     try {
