@@ -107,6 +107,14 @@
     download("novels.json",JSON.stringify(manifest,null,2)+"\n","application/json;charset=utf-8");
     status("تم تجهيز novels.json. استبدل به ملف content/novels.json في المستودع.");
   }
+  function exportNovelPackage() {
+    const n=activeNovel(); if(!n)return;
+    const metadata={...n};
+    delete metadata.chapters; delete metadata.count; delete metadata.link;
+    download("novel.json",JSON.stringify(metadata,null,2)+"\n","application/json;charset=utf-8");
+    status("تم تجهيز novel.json. ارفعه داخل content/novels/"+n.slug+"/ ثم ضع الفصول داخل مجلد chapters بجواره.");
+  }
+
   function addNovel() {
     const title=prompt("اكتب عنوان الرواية الجديدة:"); if(!title?.trim())return;
     const slug=slugify(title)+"-"+Date.now().toString(36);
@@ -141,6 +149,7 @@
   $("saveChapter").addEventListener("click",saveChapter);
   $("downloadChapter").addEventListener("click",()=>{saveChapter();const n=activeNovel();if(n&&selectedChapter!==null)download(n.slug+"-"+fileName(selectedChapter),changed.get(chapterPath(n,selectedChapter)));});
   $("exportManifest").addEventListener("click",exportManifest);
+  $("exportNovelPackage").addEventListener("click",exportNovelPackage);
   $("exportAll").addEventListener("click",exportAll);
   $("removeNovel").addEventListener("click",()=>{
     const n=activeNovel();if(!n||!confirm("حذف "+n.title+" من الفهرس فقط؟ لن تُحذف ملفات الفصول المنشورة."))return;
