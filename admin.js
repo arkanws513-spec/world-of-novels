@@ -74,7 +74,7 @@
     const path=chapterPath(n,number); let source=changed.get(path);
     if(source===undefined) {
       status("جارٍ تحميل الفصل "+number+"…");
-      try { const response=await fetch(path+"?v="+Date.now()); if(!response.ok)throw Error("missing"); source=await response.text(); const parsedTitle=source.match(/^#\\s+(.+)$/m)?.[1]?.trim(); if(parsedTitle){chapter.title=parsedTitle;$("chapterTitle").value=parsedTitle;} }
+      try { const response=await fetch(path+"?v="+Date.now()); if(!response.ok)throw Error("missing"); source=await response.text(); const parsedTitle=source.match(/^#\s+(.+)$/m)?.[1]?.trim(); if(parsedTitle){chapter.title=parsedTitle;$("chapterTitle").value=parsedTitle;} }
       catch { source="# "+$("chapterTitle").value+"\n\n"; status("تعذر تحميل ملف الفصل المنشور. تحقق من المسار أو أنشئ محتواه.",true); }
     }
     $("chapterContent").value=source; status("تم فتح الفصل "+number+".");
