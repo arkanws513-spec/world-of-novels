@@ -2,7 +2,35 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "content/novels.json"), "utf8"));
+const manifestPath = path.join(ROOT, "content/novels.json");
+const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+if (!Array.isArray(manifest.novels)) throw new Error("content/novels.json must contain a novels array.");
+const novelRoot = path.join(ROOT, "content/novels");
+let discoveredNovels = false;
+if (fs.existsSync(novelRoot)) {
+  for (const folder of fs.readdirSync(novelRoot, { withFileTypes: true }).filter(item => item.isDirectory())) {
+    const metadataPath = path.join(novelRoot, folder.name, "novel.json");
+    if (!fs.existsSync(metadataPath)) continue;
+    const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
+    if (!metadata.id || !metadata.title) throw new Error("Each novel.json needs a unique id and a title: " + metadataPath);
+    if (manifest.novels.some(item => item.id === metadata.id)) continue;
+    const slug = metadata.slug || folder.name;
+    manifest.novels.push({
+      author: "عالم الروايات", genre: "", categories: [], icon: "✦", description: "",
+      intro: [], status: "متاحة للقراءة", cover: "",
+      contentDir: "content/novels/" + folder.name + "/chapters",
+      outputDir: "novels", chapterPrefix: slug + "-chapter-",
+      indexPath: "novels/" + slug + ".html", customPage: false,
+      ...metadata
+    });
+    discoveredNovels = true;
+    console.log("Discovered new novel from " + metadataPath);
+  }
+}
+if (discoveredNovels) fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+if (new Set(manifest.novels.map(novel => novel.id)).size !== manifest.novels.length) {
+  throw new Error("Novel IDs must be unique in content/novels.json.");
+}
 const esc = (value = "") => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 function markdownToHtml(markdown) {
   const lines = markdown.replace(/\r/g, "").split("\n");
@@ -71,7 +99,7 @@ function sharedHeader(novel) {
   return `<header class="site-header"><div class="container nav"><a class="logo" href="../index.html">عالم <span>الروايات</span></a><a class="ghost" href="../index.html#novels">← المكتبة</a></div></header>`;
 }
 function renderNovel(novel) {
-  const list = novel.chapters.map(c => `<a class="chapter-link" href="${esc(path.posix.basename(chapterUrl(novel, c.number)))}"><span>الفصل ${c.number} — ${esc(c.title.replace(/^الفصل\s*\S+\s*[—:-]?\s*/, ""))}</span><small>قراءة الفصل ←</small></a>`).join("\n");
+  const list = novel.chapters.map(c => `<a class="chapter-link" href="${esc(path.posix.basename(chapterUrl(novel, c.number)))}"><span>${esc(c.title)}</span><small>قراءة الفصل ${c.number} ←</small></a>`).join("\n");
   return `<!doctype html>
 <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${esc(novel.description)}"><meta name="theme-color" content="#100e16"><title>${esc(novel.title)} — عالم الروايات</title><link rel="stylesheet" href="../style.css?v=8"></head>
 <body>${sharedHeader(novel)}<main><section class="container section reader"><div class="reader-head">${novel.cover ? `<img src="../${esc(novel.cover)}" alt="غلاف ${esc(novel.title)}" loading="lazy" style="display:block;width:min(100%,300px);max-height:420px;object-fit:contain;margin:0 auto 22px;border-radius:14px">` : `<div class="book-mark">${esc(novel.icon)}</div>`}<p class="eyebrow">${esc(novel.genre)}</p><h1>${esc(novel.title)}</h1><p class="meta">تأليف: ${esc(novel.author)}</p><p class="meta">${esc(novel.status || "")}</p></div><article class="intro"><h2>مقدمة الرواية</h2>${novel.intro.map(p => `<p>${esc(p)}</p>`).join("\n")}</article><div class="reader-head"><p class="eyebrow">ابدأ القراءة</p><h2>فهرس الفصول</h2><div class="chapter-count">عدد الفصول: ${novel.chapters.length}</div></div><div class="chapter-list">${list || "<p>قريبًا ستضاف الفصول.</p>"}</div></section></main><footer><div class="container">© 2026 عالم الروايات</div></footer><script src="../site-analytics.js" defer></script></body></html>\n`;
