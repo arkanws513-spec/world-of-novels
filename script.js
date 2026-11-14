@@ -26,7 +26,7 @@
       const firstChapter = n.chapters?.[0];
       return `<article class="book"><a class="book-link" href="${escapeHtml(n.link)}" aria-label="افتح رواية ${escapeHtml(n.title)}">
         ${coverMarkup(n)}
-        <div class="book-info"><div class="book-meta"><span class="book-status">${escapeHtml(n.status || "متاحة للقراءة")}</span><span class="chapter-total">${Number(n.count)||0} فصل</span></div>
+        <div class="book-info"><div class="book-meta"><span class="book-status">${escapeHtml(n.status || "متاحة للقراءة")}</span><span class="chapter-total">${Number(n.count)>0 ? `${Number(n.count)} فصل` : "قريباً"}</span></div>
           <h3>${escapeHtml(n.title)}</h3><p class="book-description">${escapeHtml(n.description)}</p>
           <div class="book-tags">${(n.categories || []).slice(0,3).map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
           <span class="read-link">اكتشف الرواية <b aria-hidden="true">←</b></span></div></a></article>`;
