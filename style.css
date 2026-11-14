@@ -262,3 +262,17 @@ body.reader-sepia .controls a{background:#e9ddc5;color:#6f4a26;border-color:#c8b
   html{scroll-behavior:auto}
   .reader-toolbar button,.chapter{transition:none}
 }
+
+
+/* Personal reading shelf */
+.bookmarks-card{margin:24px auto 0;padding:22px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,#1d1724,#15121a)}
+.bookmarks-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
+.bookmarks-head h3{margin:0;font-size:20px}
+.bookmarks-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bookmark-item{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0;padding:12px 14px;border:1px solid #3a3042;border-radius:11px;background:#17131d}
+.bookmark-item>a{display:flex;flex-direction:column;gap:3px;min-width:0;text-decoration:none}
+.bookmark-item strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.bookmark-novel{color:var(--accent);font-size:12px}
+.bookmark-item button{flex:none;width:30px;height:30px;border:1px solid #51445a;border-radius:8px;background:transparent;color:#cbbdcf;cursor:pointer}
+.bookmark-item button:hover{border-color:#d18a8a;color:#f1aaaa}
+@media(max-width:650px){.bookmarks-list{grid-template-columns:1fr}.bookmarks-head{align-items:flex-start;flex-direction:column}}
