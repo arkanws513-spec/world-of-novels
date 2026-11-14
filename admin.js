@@ -52,7 +52,7 @@
     $("novelGenre").value=n.genre||""; $("novelIcon").value=n.icon||"✦";
     $("novelCategories").value=(n.categories||[]).join("، ");
     $("novelDescription").value=n.description||"";
-    $("novelCover").value=n.cover||""; $("novelStatus").value=n.status||"متاحة للقراءة";
+    $("novelCover").value=n.cover||""; $("novelStatus").value=n.status||"متاحة للقراءة"; $("novelIntro").value=(n.intro||[]).join("\n\n");
   }
   function renderChapters() {
     const n=activeNovel(),list=$("chapterList");
@@ -74,7 +74,7 @@
     const path=chapterPath(n,number); let source=changed.get(path);
     if(source===undefined) {
       status("جارٍ تحميل الفصل "+number+"…");
-      try { const response=await fetch(path+"?v="+Date.now()); if(!response.ok)throw Error("missing"); source=await response.text(); }
+      try { const response=await fetch(path+"?v="+Date.now()); if(!response.ok)throw Error("missing"); source=await response.text(); const parsedTitle=source.match(/^#\\s+(.+)$/m)?.[1]?.trim(); if(parsedTitle){chapter.title=parsedTitle;$("chapterTitle").value=parsedTitle;} }
       catch { source="# "+$("chapterTitle").value+"\n\n"; status("تعذر تحميل ملف الفصل المنشور. تحقق من المسار أو أنشئ محتواه.",true); }
     }
     $("chapterContent").value=source; status("تم فتح الفصل "+number+".");
@@ -85,7 +85,7 @@
     n.genre=$("novelGenre").value.trim(); n.icon=$("novelIcon").value.trim()||"✦";
     n.categories=$("novelCategories").value.split(/[،,]/).map(x=>x.trim()).filter(Boolean);
     n.description=$("novelDescription").value.trim(); n.cover=$("novelCover").value.trim();
-    n.status=$("novelStatus").value.trim()||"متاحة للقراءة";
+    n.status=$("novelStatus").value.trim()||"متاحة للقراءة"; n.intro=$("novelIntro").value.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
     persist(); renderNovels(); status("تم حفظ بيانات الرواية في المسودة.");
   }
   function saveChapter() {
