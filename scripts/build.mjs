@@ -58,10 +58,10 @@ for (const novel of all) {
 }
 const siteBase = "https://arkanws513-spec.github.io/world-of-novels/";
 const sitemapUrls = [siteBase, ...all.flatMap(n => [new URL(n.indexPath, siteBase).href, ...n.chapters.map(c => new URL(chapterUrl(n, c.number), siteBase).href)])];
-const sitemapXml = '<?xml version="1.0" encoding="UTF-8"?>\\n' +
-  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n' +
-  sitemapUrls.map(url => '  <url><loc>' + esc(url) + '</loc></url>').join('\\n') +
-  '\\n</urlset>\\n';
+const sitemapXml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  sitemapUrls.map(url => '  <url><loc>' + esc(url) + '</loc></url>').join('\n') +
+  '\n</urlset>\n';
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), sitemapXml);
 function chapterUrl(novel, number) {
   const file = novel.chapterPrefix + number + ".html";
