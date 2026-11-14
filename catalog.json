@@ -2,25 +2,6 @@
   "title": "عالم الروايات",
   "novels": [
     {
-      "id": "heirs-first-civilization",
-      "slug": "heirs-of-the-first-civilization",
-      "title": "ورثة الحضارة الأولى",
-      "author": "عالم الروايات",
-      "genre": "خيال علمي • حضارات فضائية • مستقبل",
-      "categories": [
-        "خيال علمي",
-        "فضاء",
-        "حضارات"
-      ],
-      "icon": "✧",
-      "cover": "assets/first-civilization-heirs-cover.svg",
-      "status": "قريباً",
-      "description": "من حلم خالد بالسكن في الفضاء إلى بداية تحول البشرية نحو حضارة بين نجمية؛ رحلة في العلم والتكنولوجيا والسياسة وحدود المعرفة.",
-      "count": 0,
-      "link": "novels/heirs-of-the-first-civilization.html",
-      "chapters": []
-    },
-    {
       "id": "saint-seven-worlds",
       "slug": "saint-seven-worlds",
       "title": "صعود قديس العوالم السبع",
