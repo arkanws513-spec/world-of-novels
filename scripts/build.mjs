@@ -99,9 +99,23 @@ function sharedHeader(novel) {
   return `<header class="site-header"><div class="container nav"><a class="logo" href="../index.html">عالم <span>الروايات</span></a><a class="ghost" href="../index.html#novels">← المكتبة</a></div></header>`;
 }
 function renderNovel(novel) {
+  const canonical = siteBase + novel.indexPath;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWorkSeries",
+    name: novel.title,
+    author: { "@type": "Person", name: novel.author },
+    description: novel.description,
+    hasPart: novel.chapters.map(chapter => ({
+      "@type": "Chapter", name: chapter.title,
+      url: siteBase + chapterUrl(novel, chapter.number)
+    }))
+  };
+  if (novel.cover) schema.image = siteBase + novel.cover;
+  const schemaJson = JSON.stringify(schema).replaceAll("<", "\\u003c");
   const list = novel.chapters.map(c => `<a class="chapter-link" href="${esc(path.posix.basename(chapterUrl(novel, c.number)))}"><span>${esc(c.title)}</span><small>قراءة الفصل ${c.number} ←</small></a>`).join("\n");
   return `<!doctype html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${esc(novel.description)}"><meta name="theme-color" content="#100e16"><title>${esc(novel.title)} — عالم الروايات</title><link rel="stylesheet" href="../style.css?v=9"></head>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${esc(novel.description)}"><meta name="theme-color" content="#100e16"><link rel="canonical" href="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:title" content="${esc(novel.title)}"><meta property="og:description" content="${esc(novel.description)}">${novel.cover ? `<meta property="og:image" content="${esc(siteBase + novel.cover)}">` : ""}<meta name="twitter:card" content="summary_large_image"><title>${esc(novel.title)} — عالم الروايات</title><script type="application/ld+json">${schemaJson}</script><link rel="stylesheet" href="../style.css?v=9"></head>
 <body>${sharedHeader(novel)}<main><section class="container section reader"><div class="reader-head">${novel.cover ? `<img src="../${esc(novel.cover)}" alt="غلاف ${esc(novel.title)}" loading="lazy" style="display:block;width:min(100%,300px);max-height:420px;object-fit:contain;margin:0 auto 22px;border-radius:14px">` : `<div class="book-mark">${esc(novel.icon)}</div>`}<p class="eyebrow">${esc(novel.genre)}</p><h1>${esc(novel.title)}</h1><p class="meta">تأليف: ${esc(novel.author)}</p><p class="meta">${esc(novel.status || "")}</p></div><article class="intro"><h2>مقدمة الرواية</h2>${novel.intro.map(p => `<p>${esc(p)}</p>`).join("\n")}</article><div class="reader-head"><p class="eyebrow">ابدأ القراءة</p><h2>فهرس الفصول</h2><div class="chapter-count">عدد الفصول: ${novel.chapters.length}</div></div><div class="chapter-list">${list || "<p>قريبًا ستضاف الفصول.</p>"}</div></section></main><footer><div class="container">© 2026 عالم الروايات</div></footer><script src="../site-analytics.js" defer></script></body></html>\n`;
 }
 function renderChapter(novel, chapter, previous, next) {
