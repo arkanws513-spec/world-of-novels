@@ -487,3 +487,6 @@ footer{background:#0d0b12}
  .detail-facts span{padding:6px}
  .detail-facts strong{font-size:9px}
 }
+
+.detail-coming{display:inline-flex;align-items:center;min-height:42px;padding:9px 16px;border:1px solid #70583d;border-radius:10px;background:#d2a76512;color:#e5c78e;font-size:13px}
+@media(max-width:700px){.detail-coming{min-height:36px;padding:7px 10px;font-size:11px}}
