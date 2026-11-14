@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+<title id="title">ورثة الحضارة الأولى</title><desc id="desc">غلاف خيال علمي لمدينة مصرية مستقبلية بين الأرض والنجوم</desc>
+<defs>
+ <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#050b20"/><stop offset=".58" stop-color="#101b39"/><stop offset="1" stop-color="#050711"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#ffe5a0" stop-opacity=".95"/><stop offset="1" stop-color="#e5a83a" stop-opacity="0"/></radialGradient>
+ <linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff1b8"/><stop offset=".45" stop-color="#e8b64d"/><stop offset="1" stop-color="#8b5420"/></linearGradient>
+ <linearGradient id="planet" x2="0" y2="1"><stop stop-color="#6689b7"/><stop offset=".45" stop-color="#233e68"/><stop offset="1" stop-color="#081329"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+</defs>
+<rect width="900" height="1200" fill="url(#bg)"/>
+<g fill="#fff"><circle cx="85" cy="100" r="2"/><circle cx="180" cy="180" r="2"/><circle cx="745" cy="125" r="2"/><circle cx="810" cy="270" r="2"/><circle cx="600" cy="205" r="1.8"/><circle cx="320" cy="270" r="1.5"/><circle cx="95" cy="410" r="1.5"/><circle cx="710" cy="390" r="2"/><circle cx="450" cy="80" r="1.5"/><circle cx="540" cy="330" r="1.2"/><circle cx="255" cy="350" r="1.4"/></g>
+<circle cx="710" cy="250" r="155" fill="url(#glow)" filter="url(#blur)"/><circle cx="710" cy="250" r="95" fill="#d8e5f5" opacity=".9"/><path d="M625 230 Q710 190 795 228 Q750 285 660 300Z" fill="#8196b7" opacity=".35"/>
+<path d="M0 690 Q220 610 420 680 T900 650 L900 1200H0Z" fill="url(#planet)"/>
+<path d="M0 745 Q220 660 430 735 T900 700" fill="none" stroke="#9fc8f5" stroke-opacity=".6" stroke-width="5"/>
+<circle cx="450" cy="730" r="180" fill="url(#glow)" opacity=".8"/>
+<!-- orbital rings -->
+<ellipse cx="470" cy="635" rx="390" ry="95" fill="none" stroke="#e9bd65" stroke-width="4" opacity=".65" transform="rotate(-12 470 635)"/>
+<ellipse cx="470" cy="635" rx="330" ry="65" fill="none" stroke="#79c9ff" stroke-width="2" opacity=".65" transform="rotate(-12 470 635)"/>
+<!-- futuristic city -->
+<g fill="#172944" stroke="#d4a64f" stroke-width="3">
+ <path d="M85 790V625H130V790Z"/><path d="M145 790V570H195V790Z"/><path d="M215 790V650H260V790Z"/>
+ <path d="M620 760V560H670V760Z"/><path d="M685 760V500H740V760Z"/><path d="M755 760V610H810V760Z"/>
+ <path d="M355 760V580H390V760Z"/><path d="M405 760V525H450V760Z"/><path d="M465 760V600H505V760Z"/>
+</g>
+<g stroke="#75caff" stroke-width="5" opacity=".8"><path d="M160 600V750M700 530V735M425 550V740M640 580V730"/></g>
+<!-- pyramids -->
+<path d="M235 850L355 670L475 850Z" fill="#b88b48" stroke="#ffe2a0" stroke-width="4"/><path d="M365 850L485 690L605 850Z" fill="#886333" stroke="#e5bd73" stroke-width="4"/>
+<path d="M355 670L355 850L235 850Z" fill="#e2b866" opacity=".25"/><path d="M485 690L485 850L365 850Z" fill="#f2d28e" opacity=".18"/>
+<!-- starship -->
+<path d="M80 485L300 440L445 465L310 490L155 505Z" fill="#b6d6ef" stroke="#f6d48b" stroke-width="3"/><path d="M175 480L300 455L390 466L290 479Z" fill="#1d4164"/><path d="M82 485L30 510L160 501Z" fill="#5daee5"/>
+<path d="M520 420L660 390L805 415L675 438Z" fill="#c7d9e8" stroke="#e6b85d" stroke-width="3"/><path d="M610 415L680 402L755 414L675 426Z" fill="#1b3d60"/>
+<!-- Egyptian motif -->
+<path d="M450 275l-35 55h70Z" fill="none" stroke="url(#gold)" stroke-width="7"/><path d="M450 330v65m-24-25h48" stroke="url(#gold)" stroke-width="7" fill="none"/>
+<text x="450" y="105" fill="#f0c76e" font-family="serif" font-size="34" text-anchor="middle" letter-spacing="8">رواية خيال علمي</text>
+<text x="450" y="205" fill="url(#gold)" font-family="serif" font-size="74" font-weight="bold" text-anchor="middle">ورثة الحضارة</text>
+<text x="450" y="290" fill="url(#gold)" font-family="serif" font-size="82" font-weight="bold" text-anchor="middle">الأولى</text>
+<path d="M170 325H730" stroke="#d9aa50" stroke-width="2"/>
+<text x="450" y="965" fill="#f5e7c5" font-family="serif" font-size="30" text-anchor="middle">من حلم إنسان واحد...</text>
+<text x="450" y="1015" fill="#f5e7c5" font-family="serif" font-size="30" text-anchor="middle">إلى مستقبل حضارة بين النجوم</text>
+<path d="M230 1055H670" stroke="#d9aa50" stroke-width="2"/>
+<text x="450" y="1110" fill="#dcb96e" font-family="serif" font-size="24" text-anchor="middle">عالم الروايات</text>
+</svg>
