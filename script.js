@@ -107,15 +107,27 @@
   $("sortNovels")?.addEventListener("change", render);
   $("showAll")?.addEventListener("click", () => { search.value = ""; chooseCategory("الكل"); });
   const menuToggle = $("menuToggle"), mainNav = $("mainNav");
+  const closeMainNav = (restoreFocus = false) => {
+    if (!menuToggle || !mainNav) return;
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "فتح القائمة");
+    mainNav.classList.remove("open");
+    if (restoreFocus) menuToggle.focus();
+  };
   menuToggle?.addEventListener("click", () => {
     const open = menuToggle.getAttribute("aria-expanded") !== "true";
     menuToggle.setAttribute("aria-expanded", String(open));
     menuToggle.setAttribute("aria-label", open ? "إغلاق القائمة" : "فتح القائمة");
     mainNav?.classList.toggle("open", open);
   });
-  mainNav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-    menuToggle?.setAttribute("aria-expanded","false"); menuToggle?.setAttribute("aria-label","فتح القائمة"); mainNav.classList.remove("open");
-  }));
+  mainNav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => closeMainNav()));
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && menuToggle?.getAttribute("aria-expanded") === "true") closeMainNav(true);
+  });
+  document.addEventListener("click", event => {
+    if (menuToggle?.getAttribute("aria-expanded") === "true" &&
+        !mainNav?.contains(event.target) && !menuToggle.contains(event.target)) closeMainNav();
+  });
   fetch("catalog.json").then(response => {
     if (!response.ok) throw new Error("Catalog request failed");
     return response.json();
