@@ -73,6 +73,10 @@ jobs:
             }
           }
           const home = fs.readFileSync("index.html", "utf8");
+          const stylesheet = fs.readFileSync("style.css", "utf8");
+          const homepageScript = fs.readFileSync("script.js", "utf8");
+          if (!stylesheet.includes("#mainNav{display:none") || stylesheet.includes("nav{display:none")) fail("Mobile navigation CSS must target only #mainNav; chapter navigation must remain visible.");
+          if (!homepageScript.includes('event.key === "Escape"') || !homepageScript.includes("closeMainNav")) fail("Mobile navigation must support keyboard dismissal.");
           for (const marker of ["script.js", "style.css", "stats.html"]) {
             if (!home.includes(marker)) fail("Homepage is missing " + marker);
           }
