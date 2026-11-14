@@ -81,6 +81,28 @@
       }
     } catch (error) { console.warn("تعذر قراءة موضع القراءة المحفوظ.", error); }
   }
+  function renderBookmarks() {
+    const card=$("bookmarksCard"),host=$("bookmarksList");
+    if(!card||!host)return;
+    let items=[];
+    try{items=JSON.parse(localStorage.getItem("worldOfNovels:bookmarks")||"[]");}catch{}
+    const valid=Array.isArray(items)?items.filter(item=>item&&item.url&&item.id):[];
+    if(!valid.length){card.hidden=true;host.replaceChildren();return;}
+    card.hidden=false;
+    host.innerHTML=valid.map(item=>{
+      const novel=novels.find(n=>n.id===item.id);
+      let href="#novels";
+      try{const url=new URL(item.url,location.origin);if(url.origin===location.origin)href=url.pathname+url.search+url.hash;}catch{}
+      return `<article class="bookmark-item"><a href="${escapeHtml(href)}"><span class="bookmark-novel">${escapeHtml(novel?.title||"رواية")}</span><strong>${escapeHtml(item.title||("الفصل "+item.chapter))}</strong></a><button type="button" data-remove-bookmark="${escapeHtml(item.key||"")}" aria-label="إزالة العلامة المرجعية">×</button></article>`;
+    }).join("");
+    host.querySelectorAll("[data-remove-bookmark]").forEach(button=>button.addEventListener("click",()=>{
+      const key=button.dataset.removeBookmark;
+      const next=valid.filter(item=>item.key!==key);
+      try{localStorage.setItem("worldOfNovels:bookmarks",JSON.stringify(next));}catch{}
+      renderBookmarks();
+    }));
+  }
+
   search.addEventListener("input", render);
   $("sortNovels")?.addEventListener("change", render);
   $("showAll")?.addEventListener("click", () => { search.value = ""; chooseCategory("الكل"); });
@@ -101,7 +123,7 @@
     novels = Array.isArray(data.novels) ? data.novels : [];
     $("totalNovels").textContent = novels.length;
     $("totalChapters").textContent = totalChapters(novels);
-    renderCategories(); render(); renderLatest(); renderFeatured(); renderContinue();
+    renderCategories(); render(); renderLatest(); renderFeatured(); renderContinue(); renderBookmarks();
   }).catch(error => {
     console.error("تعذر تحميل فهرس الروايات.", error);
     empty.hidden = false; empty.textContent = "تعذر تحميل فهرس الروايات حاليًا. أعد تحميل الصفحة بعد قليل.";
