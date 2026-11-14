@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
+const siteBase = "https://arkanws513-spec.github.io/world-of-novels/";
 const manifestPath = path.join(ROOT, "content/novels.json");
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 if (!Array.isArray(manifest.novels)) throw new Error("content/novels.json must contain a novels array.");
@@ -84,7 +85,6 @@ for (const novel of all) {
   }
   console.log(`Built ${novel.slug}: ${novel.chapters.length} chapters`);
 }
-const siteBase = "https://arkanws513-spec.github.io/world-of-novels/";
 const sitemapUrls = [siteBase, ...all.flatMap(n => [new URL(n.indexPath, siteBase).href, ...n.chapters.map(c => new URL(chapterUrl(n, c.number), siteBase).href)])];
 const sitemapXml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
