@@ -7,7 +7,8 @@
   const note = document.getElementById("readerSaveNote");
   const prefsKey = "worldOfNovels:readerPreferences";
   const positionKey = "worldOfNovels:position:" + location.pathname;
-  const defaults = { font: 19, line: 2.25, theme: "dark", wide: false, spacing: 1, fontFamily: "serif" };
+  const spacingValues = [1.8, 2.0, 2.25, 2.5];
+  const defaults = { font: 19, line: 2.25, theme: "dark", wide: false, spacing: 2, fontFamily: "serif" };
   let prefs = { ...defaults };
   let saveFrame = 0;
   let utterance = null;
@@ -19,6 +20,9 @@
     if (!["serif","system","literata"].includes(prefs.fontFamily)) prefs.fontFamily = defaults.fontFamily;
     prefs.font = Math.max(15, Math.min(30, Number(prefs.font) || defaults.font));
     prefs.line = Math.max(1.6, Math.min(2.8, Number(prefs.line) || defaults.line));
+    const matchingSpacing = spacingValues.indexOf(prefs.line);
+    prefs.spacing = matchingSpacing >= 0 ? matchingSpacing : defaults.spacing;
+    prefs.wide = prefs.wide === true;
   } catch {}
 
   const say = message => { if (note) note.textContent = message; };
@@ -82,8 +86,8 @@
     prefs.wide = !prefs.wide; apply(); savePrefs();
   });
   document.getElementById("readerSpacing")?.addEventListener("click", () => {
-    prefs.spacing = (prefs.spacing + 1) % 4;
-    prefs.line = [1.8, 2.0, 2.25, 2.5][prefs.spacing];
+    prefs.spacing = (prefs.spacing + 1) % spacingValues.length;
+    prefs.line = spacingValues[prefs.spacing];
     apply(); savePrefs();
   });
   document.getElementById("chapterJump")?.addEventListener("change", event => {
