@@ -49,7 +49,7 @@ for (const file of files.filter(file => file.endsWith(".css"))) {
 
 function checkReference(raw, sourceFile, kind) {
   const ref = raw.trim();
-  if (!ref || /^(?:https?:|mailto:|tel:|data:|blob:|#|\/\/)/i.test(ref)) return;
+  if (!ref || ref.startsWith("http://") || ref.startsWith("https://") || ref.startsWith("//") || ["mailto:", "tel:", "data:", "blob:", "#"].some(prefix => ref.toLowerCase().startsWith(prefix))) return;
   if (/^javascript:/i.test(ref)) { fail("Unsafe javascript: " + kind + " in " + relative(sourceFile)); return; }
   let decoded;
   try { decoded = decodeURIComponent(ref); }
