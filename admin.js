@@ -64,6 +64,7 @@
     list.querySelectorAll("[data-number]").forEach(button=>button.addEventListener("click",()=>loadChapter(Number(button.dataset.number))));
   }
   function selectNovel(id) {
+    chapterLoadToken++;
     selectedNovel=id; selectedChapter=null; renderNovels(); fillNovel(); renderChapters();
     $("chapterNumber").value=""; $("chapterTitle").value=""; $("chapterContent").value="";
     status("تم اختيار الرواية.");
