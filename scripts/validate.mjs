@@ -70,17 +70,17 @@ function checkReference(raw, sourceFile, kind) {
 
 for (const file of files.filter(file => file.endsWith(".html"))) {
   const html = fs.readFileSync(file, "utf8");
-  if (!/^\\s*<!doctype html>/i.test(html)) fail("Missing HTML doctype: " + relative(file));
+  if (!/^\s*<!doctype html>/i.test(html)) fail("Missing HTML doctype: " + relative(file));
   for (const tag of ["html", "head", "title", "body"]) {
-    const opens = (html.match(new RegExp("<" + tag + "\\\\b", "gi")) || []).length;
-    const closes = (html.match(new RegExp("</" + tag + "\\\\s*>", "gi")) || []).length;
+    const opens = (html.match(new RegExp("<" + tag + "\\b", "gi")) || []).length;
+    const closes = (html.match(new RegExp("</" + tag + "\\s*>", "gi")) || []).length;
     if (opens !== 1 || closes !== 1) fail("Unbalanced " + tag + " element in " + relative(file));
   }
-  const ids = [...html.matchAll(/\\bid\\s*=\\s*["']([^"']+)["']/gi)].map(match => match[1]);
+  const ids = [...html.matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)].map(match => match[1]);
   const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
   if (duplicates.length) fail("Duplicate HTML id(s) in " + relative(file) + ": " + [...new Set(duplicates)].join(", "));
-  for (const image of html.matchAll(/<img\\b[^>]*>/gi)) {
-    if (!/\\balt\\s*=\\s*["']/i.test(image[0])) fail("Image missing alt text in " + relative(file));
+  for (const image of html.matchAll(/<img\b[^>]*>/gi)) {
+    if (!/\balt\s*=\s*["']/i.test(image[0])) fail("Image missing alt text in " + relative(file));
   }
   for (const match of html.matchAll(/\b(?:href|src)\s*=\s*["']([^"']+)["']/gi)) {
     checkReference(match[1], file, "HTML link");
@@ -101,7 +101,7 @@ if (existsLocal(manifestPath) && existsLocal(catalogPath)) {
   if (!Array.isArray(manifest.novels) || !Array.isArray(catalog.novels)) {
     fail("Manifest and catalog must both contain novels arrays.");
   } else {
-    const ids = manifest.novels.map(novel => novel.id);
+  const ids = [...html.matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)].map(match => match[1]);
     if (new Set(ids).size !== ids.length) fail("Manifest contains duplicate novel IDs.");
     if (catalog.novels.length !== manifest.novels.length) fail("Manifest and catalog novel counts differ.");
     for (const novel of manifest.novels) {
