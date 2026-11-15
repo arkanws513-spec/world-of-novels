@@ -8,7 +8,7 @@
   const escapeHtml = value => String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
   const totalChapters = list => list.reduce((sum, novel) => sum + Number(novel.count || 0), 0);
   const coverClass = novel => novel.id === "naruto-legacy" ? "cover-shinobi" : "cover-fantasy";
-  const coverMarkup = novel => novel.cover ? `<div class="book-cover book-cover-image"><img src="${escapeHtml(novel.cover)}" alt="غلاف ${escapeHtml(novel.title)}" loading="lazy"></div>` : `<div class="book-cover ${coverClass(novel)}" aria-hidden="true"><span class="cover-kicker">عالم الروايات</span><span class="cover-emblem">${escapeHtml(novel.icon || "✦")}</span><span class="cover-title">${escapeHtml(novel.title)}</span><span class="cover-bottom">${escapeHtml((novel.categories || []).slice(0,2).join(" • "))}</span></div>`;
+  const coverMarkup = novel => novel.cover ? `<button class="cover-preview-button" type="button" aria-label="عرض غلاف ${escapeHtml(novel.title)} بالحجم الكامل"><div class="book-cover book-cover-image"><img src="${escapeHtml(novel.cover)}" alt="غلاف ${escapeHtml(novel.title)}" loading="lazy"></div><span class="cover-preview-hint" aria-hidden="true">اضغط لعرض الغلاف</span></button>` : `<div class="book-cover ${coverClass(novel)}" aria-hidden="true"><span class="cover-kicker">عالم الروايات</span><span class="cover-emblem">${escapeHtml(novel.icon || "✦")}</span><span class="cover-title">${escapeHtml(novel.title)}</span><span class="cover-bottom">${escapeHtml((novel.categories || []).slice(0,2).join(" • "))}</span></div>`;
   function filteredNovels() {
     const query = norm(search.value.trim());
     const filtered = novels.filter(n => {
@@ -23,15 +23,15 @@
   function render() {
     const filtered = filteredNovels();
     books.innerHTML = filtered.map(n => {
-      return `<article class="book"><a class="book-link" href="${escapeHtml(n.link)}" aria-label="افتح رواية ${escapeHtml(n.title)}">
+      return `<article class="book"><div class="book-link">
         ${coverMarkup(n)}
-        <div class="book-info">
+        <a class="book-info-anchor" href="${escapeHtml(n.link)}" aria-label="افتح رواية ${escapeHtml(n.title)}"><div class="book-info">
           <div class="book-meta"><span class="book-status">${escapeHtml(n.status || "متاحة للقراءة")}</span><span class="chapter-total">${Number(n.count)>0 ? `${Number(n.count)} فصل` : "قريباً"}</span></div>
           <h3>${escapeHtml(n.title)}</h3>
           <p class="book-description">${escapeHtml(n.description)}</p>
           <div class="book-tags">${(n.categories || []).slice(0,2).map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
           <span class="read-link">افتح الرواية <b aria-hidden="true">←</b></span>
-        </div></a></article>`;
+        </div></a></div></article>`;
     }).join("");
     count.textContent = `عدد النتائج: ${filtered.length}`;
     $("libraryCount").textContent = `${novels.length} أعمال في المكتبة`;
@@ -107,6 +107,41 @@
       renderBookmarks();
     }));
   }
+
+  books.addEventListener("click", event => {
+    const trigger = event.target.closest(".cover-preview-button");
+    if (!trigger) return;
+    const image = trigger.querySelector("img");
+    if (!image) return;
+    const overlay = $("coverLightbox");
+    const fullImage = overlay.querySelector(".cover-lightbox-image");
+    fullImage.src = image.currentSrc || image.src;
+    fullImage.alt = image.alt || "غلاف الرواية";
+    overlay.hidden = false;
+    document.body.classList.add("cover-lightbox-open");
+    overlay.querySelector(".cover-lightbox-close").focus();
+  });
+  const lightbox = document.createElement("div");
+  lightbox.id = "coverLightbox";
+  lightbox.className = "cover-lightbox";
+  lightbox.hidden = true;
+  lightbox.setAttribute("role", "dialog");
+  lightbox.setAttribute("aria-modal", "true");
+  lightbox.setAttribute("aria-label", "عرض غلاف الرواية بالحجم الكامل");
+  lightbox.innerHTML = `<button class="cover-lightbox-close" type="button" aria-label="إغلاق الصورة">×</button><img class="cover-lightbox-image" alt=""><p class="cover-lightbox-caption">اضغط خارج الصورة أو على × للإغلاق</p>`;
+  document.body.append(lightbox);
+  const closeLightbox = () => {
+    if (lightbox.hidden) return;
+    lightbox.hidden = true;
+    document.body.classList.remove("cover-lightbox-open");
+    document.querySelector(".cover-preview-button")?.focus();
+  };
+  lightbox.addEventListener("click", event => {
+    if (event.target === lightbox || event.target.closest(".cover-lightbox-close")) closeLightbox();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeLightbox();
+  });
 
   search.addEventListener("input", render);
   $("sortNovels")?.addEventListener("change", render);
