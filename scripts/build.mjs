@@ -33,7 +33,7 @@ if (new Set(manifest.novels.map(novel => novel.id)).size !== manifest.novels.len
   throw new Error("Novel IDs must be unique in content/novels.json.");
 }
 const resolveSafePath = (value, label) => {
-  if (typeof value !== "string" || !value.trim() || value.startsWith("/") || value.includes("\\\\") ||
+  if (typeof value !== "string" || !value.trim() || value.startsWith("/") || value.includes("\\") ||
       value.split("/").some(part => !part || part === "." || part === "..")) {
     throw new Error(label + " must be a safe repository-relative path: " + value);
   }
@@ -53,7 +53,7 @@ for (const novel of manifest.novels) {
       /[\\\\/]/.test(novel.chapterPrefix)) {
     throw new Error("chapterPrefix must be a non-empty filename prefix for " + novel.id);
   }
-  if (novel.cover && !/^https?:\\/\\//i.test(novel.cover)) {
+  if (novel.cover && !(novel.cover.startsWith("http://") || novel.cover.startsWith("https://"))) {
     resolveSafePath(novel.cover, "cover for " + novel.id);
   }
 }
