@@ -27,12 +27,7 @@ jobs:
           node-version: 22
       - name: Validate JavaScript
         run: |
-          node --check script.js
-          node --check reader-controls.js
-          node --check site-analytics.js
-          node --check stats-dashboard.js
-          node --check admin.js
-          node --check scripts/build.mjs
+          find . -type f \( -name '*.js' -o -name '*.mjs' \) -not -path './.git/*' -print0 | xargs -0 -r -n1 node --check
       - name: Build and publish generated chapters safely
         shell: bash
         run: |
@@ -43,6 +38,7 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             node scripts/build.mjs
+            node scripts/validate.mjs
             node --input-type=module <<'NODE'
           import fs from "node:fs";
           import path from "node:path";
