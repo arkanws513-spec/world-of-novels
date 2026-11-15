@@ -5,6 +5,7 @@
   const API = "https://api.github.com/repos/arkanws513-spec/world-of-novels/contents/";
   let manifest = null, selectedNovel = null, selectedChapter = null;
   let changed = new Map();
+  let chapterLoadToken = 0;
 
   const esc = value => String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
   const status = (message, bad=false) => { $("adminStatus").textContent=message; $("adminStatus").style.color=bad?"#e7a2a2":"#e5bd80"; };
@@ -68,6 +69,8 @@
     status("تم اختيار الرواية.");
   }
   async function loadChapter(number) {
+    const token = ++chapterLoadToken;
+    const novelId = selectedNovel;
     const n=activeNovel(),chapter=n?.chapters.find(item=>item.number===number);
     if(!n||!chapter)return;
     selectedChapter=number; renderChapters(); $("chapterNumber").value=number; $("chapterTitle").value=chapter.title||"الفصل "+number;
@@ -77,6 +80,7 @@
       try { const response=await fetch(path+"?v="+Date.now()); if(!response.ok)throw Error("missing"); source=await response.text(); const parsedTitle=source.match(/^#\s+(.+)$/m)?.[1]?.trim(); if(parsedTitle){chapter.title=parsedTitle;$("chapterTitle").value=parsedTitle;} }
       catch { source="# "+$("chapterTitle").value+"\n\n"; status("تعذر تحميل ملف الفصل المنشور. تحقق من المسار أو أنشئ محتواه.",true); }
     }
+    if (token !== chapterLoadToken || selectedNovel !== novelId) return;
     $("chapterContent").value=source; status("تم فتح الفصل "+number+".");
   }
   function saveNovel(event) {
