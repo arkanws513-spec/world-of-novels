@@ -5,11 +5,13 @@ import { spawnSync } from "node:child_process";
 const ROOT = process.cwd();
 const errors = [];
 const fail = message => errors.push(message);
-const walk = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
-  const full = path.join(dir, entry.name);
-  return entry.isDirectory() ? walk(full) : [full];
-});
-const files = walk(ROOT).filter(file => !file.includes(path.sep + ".git" + path.sep));
+const walk = dir => fs.readdirSync(dir, { withFileTypes: true })
+  .filter(entry => entry.name !== ".git")
+  .flatMap(entry => {
+    const full = path.join(dir, entry.name);
+    return entry.isDirectory() ? walk(full) : [full];
+  });
+const files = walk(ROOT);
 const relative = file => path.relative(ROOT, file).split(path.sep).join("/");
 const existsLocal = file => fs.existsSync(file) && fs.statSync(file).isFile();
 
@@ -30,7 +32,7 @@ function checkBalancedCss(source, file) {
     if (comment) { if (char === "*" && next === "/") { comment = false; i++; } continue; }
     if (quote) {
       if (escaped) escaped = false;
-      else if (char === "\\\\") escaped = true;
+      else if (char === "\\") escaped = true;
       else if (char === quote) quote = "";
       continue;
     }
