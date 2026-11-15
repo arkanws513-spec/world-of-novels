@@ -101,7 +101,7 @@ if (existsLocal(manifestPath) && existsLocal(catalogPath)) {
   if (!Array.isArray(manifest.novels) || !Array.isArray(catalog.novels)) {
     fail("Manifest and catalog must both contain novels arrays.");
   } else {
-  const ids = [...html.matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)].map(match => match[1]);
+    const ids = manifest.novels.map(novel => novel.id);
     if (new Set(ids).size !== ids.length) fail("Manifest contains duplicate novel IDs.");
     if (catalog.novels.length !== manifest.novels.length) fail("Manifest and catalog novel counts differ.");
     for (const novel of manifest.novels) {
