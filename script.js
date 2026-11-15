@@ -108,11 +108,13 @@
     }));
   }
 
+  let lastCoverTrigger = null;
   books.addEventListener("click", event => {
     const trigger = event.target.closest(".cover-preview-button");
     if (!trigger) return;
     const image = trigger.querySelector("img");
     if (!image) return;
+    lastCoverTrigger = trigger;
     const overlay = $("coverLightbox");
     const fullImage = overlay.querySelector(".cover-lightbox-image");
     fullImage.src = image.currentSrc || image.src;
@@ -134,13 +136,19 @@
     if (lightbox.hidden) return;
     lightbox.hidden = true;
     document.body.classList.remove("cover-lightbox-open");
-    document.querySelector(".cover-preview-button")?.focus();
+    lastCoverTrigger?.focus();
+    lastCoverTrigger = null;
   };
   lightbox.addEventListener("click", event => {
     if (event.target === lightbox || event.target.closest(".cover-lightbox-close")) closeLightbox();
   });
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeLightbox();
+    if (lightbox.hidden) return;
+    if (event.key === "Escape") { closeLightbox(); return; }
+    if (event.key === "Tab") {
+      event.preventDefault();
+      lightbox.querySelector(".cover-lightbox-close").focus();
+    }
   });
 
   search.addEventListener("input", render);
