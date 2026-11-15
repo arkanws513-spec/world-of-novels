@@ -22,6 +22,26 @@
   } catch {}
 
   const say = message => { if (note) note.textContent = message; };
+
+  const settingsToggle = document.getElementById("readerSettingsToggle");
+  const settingsPanel = document.getElementById("readerSettingsPanel");
+  const setSettingsOpen = open => {
+    if (!settingsToggle || !settingsPanel) return;
+    settingsPanel.hidden = !open;
+    settingsToggle.setAttribute("aria-expanded", String(open));
+  };
+  settingsToggle?.addEventListener("click", () => {
+    setSettingsOpen(settingsToggle.getAttribute("aria-expanded") !== "true");
+  });
+  document.addEventListener("click", event => {
+    if (settingsPanel && settingsToggle && !settingsPanel.contains(event.target) && !settingsToggle.contains(event.target)) setSettingsOpen(false);
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && settingsPanel && !settingsPanel.hidden) {
+      setSettingsOpen(false); settingsToggle?.focus();
+    }
+  });
+
   const apply = () => {
     article.style.setProperty("--reader-font-size", prefs.font + "px");
     article.style.setProperty("--reader-line-height", String(prefs.line));
