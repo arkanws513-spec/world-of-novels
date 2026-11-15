@@ -48,7 +48,8 @@
       "contentDir": "content/novels/naruto-legacy-of-worlds/chapters",
       "outputDir": "naruto-legacy-of-worlds",
       "chapterPrefix": "chapter-",
-      "indexPath": "naruto-legacy-of-worlds/index.html"
+      "indexPath": "naruto-legacy-of-worlds/index.html",
+      "cover": "assets/file_000000000530821087b056ec85f77b99.png"
     },
     {
       "id": "heirs-first-civilization",
