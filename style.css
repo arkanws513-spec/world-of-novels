@@ -490,3 +490,16 @@ footer{background:#0d0b12}
 
 .detail-coming{display:inline-flex;align-items:center;min-height:42px;padding:9px 16px;border:1px solid #70583d;border-radius:10px;background:#d2a76512;color:#e5c78e;font-size:13px}
 @media(max-width:700px){.detail-coming{min-height:36px;padding:7px 10px;font-size:11px}}
+
+
+/* Compact reader settings menu */
+.reader-settings-wrap{position:relative;display:flex;justify-content:center;margin:14px 0 18px;z-index:15}
+.reader-settings-toggle{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:10px 20px;border:1px solid #806744;border-radius:13px;background:linear-gradient(145deg,#2b2230,#1b1721);color:#f0d39b;font-weight:700;cursor:pointer;box-shadow:0 8px 24px #0003}
+.reader-settings-toggle span:first-child{font-size:21px;line-height:1}
+.reader-settings-toggle:hover,.reader-settings-toggle[aria-expanded="true"]{border-color:var(--accent);background:#302537;color:#ffdfa2}
+.reader-settings-panel{width:100%;max-width:760px;margin:12px auto 0;padding:4px;border:1px solid #55445f;border-radius:18px;background:#17131d;box-shadow:0 18px 50px #0008;animation:settings-in .18s ease-out}
+.reader-settings-panel[hidden]{display:none!important}
+.reader-settings-panel .reader-toolbar{margin:0;border:0;background:transparent;box-shadow:none;justify-content:center;padding:14px}
+.reader-settings-panel .toolbar-group{padding:5px 7px}
+@keyframes settings-in{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:650px){.reader-settings-wrap{display:block;margin:12px 0}.reader-settings-toggle{width:100%;min-height:46px}.reader-settings-panel{margin-top:9px}.reader-settings-panel .reader-toolbar{gap:10px;padding:9px 5px}.reader-settings-panel .toolbar-group{flex:1 1 100%;justify-content:center}}
