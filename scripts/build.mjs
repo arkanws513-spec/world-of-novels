@@ -32,6 +32,31 @@ if (discoveredNovels) fs.writeFileSync(manifestPath, JSON.stringify(manifest, nu
 if (new Set(manifest.novels.map(novel => novel.id)).size !== manifest.novels.length) {
   throw new Error("Novel IDs must be unique in content/novels.json.");
 }
+const resolveSafePath = (value, label) => {
+  if (typeof value !== "string" || !value.trim() || value.startsWith("/") || value.includes("\\\\") ||
+      value.split("/").some(part => !part || part === "." || part === "..")) {
+    throw new Error(label + " must be a safe repository-relative path: " + value);
+  }
+  const resolved = path.resolve(ROOT, value);
+  if (!resolved.startsWith(ROOT + path.sep)) throw new Error(label + " escapes the repository: " + value);
+  return resolved;
+};
+for (const novel of manifest.novels) {
+  if (!novel.id || !novel.title) throw new Error("Every novel needs an id and title.");
+  resolveSafePath(novel.contentDir, "contentDir for " + novel.id);
+  const outputDir = resolveSafePath(novel.outputDir, "outputDir for " + novel.id);
+  const indexPath = resolveSafePath(novel.indexPath, "indexPath for " + novel.id);
+  if (!indexPath.startsWith(outputDir + path.sep)) {
+    throw new Error("indexPath must be inside outputDir for " + novel.id);
+  }
+  if (typeof novel.chapterPrefix !== "string" || !novel.chapterPrefix.trim() ||
+      /[\\\\/]/.test(novel.chapterPrefix)) {
+    throw new Error("chapterPrefix must be a non-empty filename prefix for " + novel.id);
+  }
+  if (novel.cover && !/^https?:\\/\\//i.test(novel.cover)) {
+    resolveSafePath(novel.cover, "cover for " + novel.id);
+  }
+}
 const esc = (value = "") => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 function markdownToHtml(markdown) {
   const lines = markdown.replace(/\r/g, "").split("\n");
